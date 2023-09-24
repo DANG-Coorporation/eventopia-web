@@ -18,22 +18,23 @@ import {
   InputGroup,
   InputRightElement,
   Icon,
-  // useToast,
+  useToast,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { FcGoogle } from 'react-icons/fc';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-// import { useDispatch } from 'react-redux';
-// import { registerUser } from '../redux/features/registerSlice';
-// import { useRouter } from 'next/navigation';
-// import { AppDispatch } from '@/redux/store';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../redux/features/registerSlice';
+import { useRouter } from 'next/navigation';
+import { AppDispatch } from '@/redux/store';
+import { IRegister } from '@/types';
 
 export default function RegisterForm() {
-  // const dispatch = useDispatch<AppDispatch>();
-  // const router = useRouter();
-  // const toast = useToast();
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+  const toast = useToast();
   const showPassword = () => setShow(!show);
   const [show, setShow] = useState<boolean>(false);
   const [loadingState, setLoadingState] = useState<boolean>(false);
@@ -47,19 +48,33 @@ export default function RegisterForm() {
   });
 
   const handleForm = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    formik.setFieldValue(name, value);
+    const { target } = e;
+    formik.setFieldValue(target.name, target.value);
   };
 
   const handleSubmit = () => {
     setLoadingState(true);
     setTimeout(() => {
-      console.log(formik.values);
-      setLoadingState(false);
+      dispatch(registerUser(formik.values))
+        .unwrap()
+        .then((res) => {
+          router.push('/login');
+        })
+        .catch((err) => {
+          toast({
+            title: 'An error occurred',
+            description: err.message,
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+            position: 'top-right',
+          });
+          setLoadingState(false);
+        });
     }, 1000);
   };
 
-  const formik = useFormik({
+  const formik = useFormik<IRegister>({
     initialValues: {
       name: '',
       email: '',
