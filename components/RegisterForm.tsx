@@ -30,6 +30,8 @@ import { registerUser } from '../redux/features/registerSlice';
 import { useRouter } from 'next/navigation';
 import { AppDispatch } from '@/redux/store';
 import { IRegister } from '@/types';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '@/utils/firebase';
 
 export default function RegisterForm() {
   const dispatch = useDispatch<AppDispatch>();
@@ -38,6 +40,20 @@ export default function RegisterForm() {
   const showPassword = () => setShow(!show);
   const [show, setShow] = useState<boolean>(false);
   const [loadingState, setLoadingState] = useState<boolean>(false);
+
+  const googleProvider = new GoogleAuthProvider();
+  const handleGoogleRegister = async () => {
+    try {
+      const res = await signInWithPopup(auth, googleProvider);
+      setLoadingState(true);
+      setTimeout(() => {
+        setLoadingState(false);
+        router.push('/login');
+      }, 1000);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const RegisterSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -57,7 +73,7 @@ export default function RegisterForm() {
     setTimeout(() => {
       dispatch(registerUser(formik.values))
         .unwrap()
-        .then((res) => {
+        .then(() => {
           router.push('/login');
         })
         .catch((err) => {
@@ -85,9 +101,13 @@ export default function RegisterForm() {
   });
 
   return (
-    <Stack justifyContent='center' px={{ base: 6, md: 24 }}>
+    <Stack
+      justifyContent='center'
+      px={{ base: 6, md: 24 }}
+      py={{ base: 6, lg: 0 }}
+    >
       <Heading>Create an account</Heading>
-      <Text mb='4'>
+      <Text mb='6'>
         Join our community and start exploring exciting events!
       </Text>
       <Button
@@ -97,10 +117,13 @@ export default function RegisterForm() {
         borderColor='gray.200'
         borderRadius='sm'
         _hover={{ shadow: 'sm' }}
+        onClick={handleGoogleRegister}
+        isLoading={loadingState}
+        loadingText='Registering with Google'
       >
         <Icon as={FcGoogle} mr='2' /> Register with Google
       </Button>
-      <Box position='relative' my='4'>
+      <Box position='relative' my='6'>
         <Divider borderColor='gray.300' />
         <AbsoluteCenter bg='white' px='4'>
           or
@@ -168,7 +191,7 @@ export default function RegisterForm() {
           isLoading={loadingState}
           loadingText='Registering'
           borderRadius='sm'
-          mb='2'
+          mb='4'
         >
           Register
         </Button>

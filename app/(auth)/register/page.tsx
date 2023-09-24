@@ -7,15 +7,10 @@ import RegisterForm from '@/components/RegisterForm';
 export default function Register() {
   const isSmallScreen = useBreakpointValue<boolean>({ base: true, lg: false });
   return (
-    <SimpleGrid columns={{ base: 1, lg: 2 }} spacing='6' h='100vh'>
+    <SimpleGrid columns={{ base: 1, lg: 2 }} spacing='6'>
       <RegisterForm />
       {isSmallScreen ? null : (
-        <Stack
-          h='100vh'
-          justifyContent='center'
-          alignItems='center'
-          position='relative'
-        >
+        <Stack justifyContent='center' alignItems='center' position='relative' h='100vh'>
           <Image
             src='/images/auth-img.jpeg'
             alt='authentication image'
