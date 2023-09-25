@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  eventopia_web:
+    image: eventopia-web:latest
+    container_name: eventopia_web
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    networks:
+      - eventopia_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  eventopia_network:
+    name: eventopia_network
+    driver: bridge
