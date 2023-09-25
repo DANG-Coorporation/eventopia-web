@@ -79,7 +79,6 @@ export default function LoginForm() {
         .unwrap()
         .then((res) => {
           const accessToken = res.accessToken;
-          console.log(accessToken);
           localStorage.setItem('accessToken', accessToken);
           router.push('/');
         })
