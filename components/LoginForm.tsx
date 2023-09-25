@@ -26,14 +26,14 @@ import { FcGoogle } from 'react-icons/fc';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { registerUser } from '../redux/features/registerSlice';
+import { loginUser } from '../redux/features/loginSlice';
 import { useRouter } from 'next/navigation';
 import { AppDispatch } from '@/redux/store';
-import { IRegister } from '@/types';
+import { ILogin } from '@/types';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '@/utils/firebase';
 
-export default function RegisterForm() {
+export default function LoginForm() {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const toast = useToast();
@@ -42,7 +42,7 @@ export default function RegisterForm() {
   const [loadingState, setLoadingState] = useState<boolean>(false);
 
   const googleProvider = new GoogleAuthProvider();
-  const handleGoogleRegister = async () => {
+  const handleGoogleLogin = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
       setTimeout(() => {
@@ -53,8 +53,7 @@ export default function RegisterForm() {
     }
   };
 
-  const RegisterSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
+  const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
     password: Yup.string()
       .min(8, 'Password must be at least 8 characters')
@@ -76,15 +75,18 @@ export default function RegisterForm() {
   const handleSubmit = () => {
     setLoadingState(true);
     setTimeout(() => {
-      dispatch(registerUser(formik.values))
+      dispatch(loginUser(formik.values))
         .unwrap()
-        .then(() => {
+        .then((res) => {
+          const accessToken = res.accessToken;
+          console.log(accessToken);
+          localStorage.setItem('accessToken', accessToken);
           router.push('/');
         })
-        .catch((err) => {
+        .catch(() => {
           toast({
-            title: 'An error occurred',
-            description: err.message,
+            title: 'Error',
+            description: 'Invalid email or password.',
             status: 'error',
             duration: 3000,
             isClosable: true,
@@ -95,22 +97,19 @@ export default function RegisterForm() {
     }, 1000);
   };
 
-  const formik = useFormik<IRegister>({
+  const formik = useFormik<ILogin>({
     initialValues: {
-      name: '',
       email: '',
       password: '',
     },
-    validationSchema: RegisterSchema,
+    validationSchema: LoginSchema,
     onSubmit: handleSubmit,
   });
 
   return (
     <Stack w={{ base: '340px', md: '360px' }}>
-      <Heading mt='6'>Create an account</Heading>
-      <Text mb='6'>
-        Join our community and start exploring exciting events!
-      </Text>
+      <Heading mt='6'>Welcome Back</Heading>
+      <Text mb='6'>Login to your account to continue using Eventopia.</Text>
       <Button
         w='100%'
         bg='white'
@@ -118,11 +117,11 @@ export default function RegisterForm() {
         borderColor='gray.300'
         borderRadius='sm'
         _hover={{ shadow: 'sm' }}
-        onClick={handleGoogleRegister}
+        onClick={handleGoogleLogin}
         size='lg'
         fontSize='md'
       >
-        <Icon as={FcGoogle} mr='2' boxSize={6} /> Register with Google
+        <Icon as={FcGoogle} mr='2' boxSize={6} /> Login with Google
       </Button>
       <Box position='relative' my='8'>
         <Divider borderColor='gray.300' />
@@ -138,24 +137,6 @@ export default function RegisterForm() {
         </AbsoluteCenter>
       </Box>
       <form onSubmit={formik.handleSubmit}>
-        <FormControl
-          mb='4'
-          isInvalid={!!(formik.errors.name && formik.touched.name)}
-          variant='floating'
-        >
-          <Input
-            type='text'
-            placeholder=''
-            borderRadius='sm'
-            name='name'
-            onChange={handleForm}
-            borderColor='gray.300'
-            size='lg'
-            fontSize='sm'
-          />
-          <FormLabel>Name</FormLabel>
-          <FormErrorMessage>{formik.errors.name}</FormErrorMessage>
-        </FormControl>
         <FormControl
           mb='4'
           isInvalid={!!(formik.errors.email && formik.touched.email)}
@@ -208,26 +189,26 @@ export default function RegisterForm() {
           colorScheme='orange'
           w='100%'
           isLoading={loadingState}
-          loadingText='Registering'
+          loadingText='Logging in'
           borderRadius='sm'
           mb='4'
           size='lg'
           fontSize='md'
         >
-          Register
+          Login
         </Button>
       </form>
       <Text textAlign='center'>
-        Already have an account?
+        Don't have an account?
         <Link
           as={NextLink}
-          href='/login'
+          href='/register'
           color='orange.500'
           textDecoration='underline'
           ml='2'
           _hover={{ color: 'orange.300' }}
         >
-          Login
+          Register
         </Link>
       </Text>
     </Stack>
