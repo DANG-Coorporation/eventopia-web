@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { Image, SimpleGrid, Stack, useBreakpointValue } from '@chakra-ui/react';
-import RegisterForm from '@/components/RegisterForm';
+import LoginForm from '@/components/LoginForm';
 
-export default function Register() {
+export default function Login() {
   const isSmallScreen = useBreakpointValue<boolean>({ base: true, lg: false });
   return (
     <SimpleGrid
@@ -13,7 +13,7 @@ export default function Register() {
       alignItems='center'
     >
       <Stack alignItems='center' justifyContent='center'>
-        <RegisterForm />
+        <LoginForm />
       </Stack>
       {isSmallScreen ? null : (
         <Stack
