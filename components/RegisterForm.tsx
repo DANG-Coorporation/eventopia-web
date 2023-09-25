@@ -78,8 +78,10 @@ export default function RegisterForm() {
     setTimeout(() => {
       dispatch(registerUser(formik.values))
         .unwrap()
-        .then(() => {
-          router.push('/');
+        .then((res) => {
+          const user = res;
+          localStorage.setItem('user', JSON.stringify(user));
+          router.push('/login');
         })
         .catch((err) => {
           toast({
