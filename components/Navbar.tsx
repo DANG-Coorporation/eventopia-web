@@ -21,16 +21,24 @@ import SearchInput from './SearchInput';
 import NextLink from 'next/link';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/utils/firebase';
+import { FaRightFromBracket, FaTicket } from 'react-icons/fa6';
+import { MdSpaceDashboard } from 'react-icons/md';
 
 export default function Navbar() {
   const [user] = useAuthState(auth);
   const accessToken =
     typeof window !== 'undefined' && localStorage.getItem('accessToken');
+  const localUser =
+    typeof window !== 'undefined' &&
+    JSON.parse(localStorage.getItem('localUser') || '{}');
 
   const handleLogout = () => {
     auth.signOut();
     if (accessToken) {
       localStorage.removeItem('accessToken');
+    }
+    if (localUser) {
+      localStorage.removeItem('localUser');
     }
   };
 
@@ -42,15 +50,19 @@ export default function Navbar() {
       <HStack w='80%'>
         <SearchInput />
         {user || accessToken ? (
-          <Stack spacing='6' direction='row'>
+          <Stack spacing='4' direction='row'>
             <Button
               as={NextLink}
               href='/create'
               variant='outline'
-              borderRadius='sm'
-              px='4'
+              bg='yellow.200'
+              borderWidth='2px'
+              borderColor='gray.800'
+              borderRadius='lg'
+              px='3'
               ml='4'
-              borderColor='gray.300'
+              _hover={{ bg: 'yellow.300' }}
+              shadow='sm'
             >
               <Icon as={AddIcon} mr='2' /> Create Event
             </Button>
@@ -71,53 +83,114 @@ export default function Navbar() {
                   maxWidth='40px'
                 />
               </MenuButton>
-              <MenuList mt='2' borderColor='gray.300' borderRadius='sm'>
-                <MenuItem
-                  as={NextLink}
-                  href='/login'
-                  bg='white'
-                  _hover={{ bg: 'white' }}
-                >
-                  Dashboard
+              <MenuList
+                mt='2'
+                borderRadius='lg'
+                borderColor='gray.800'
+                borderWidth='2px'
+              >
+                <MenuItem bg='white'>
+                  <Button
+                    as={NextLink}
+                    href='/dashboard'
+                    borderRadius='md'
+                    style={{ textDecoration: 'none' }}
+                    w='100%'
+                    px='4'
+                    alignItems='center'
+                    justifyContent='flex-start'
+                    bg='white'
+                    _hover={{
+                      bg: 'blue.200',
+                      borderColor: 'gray.800',
+                      borderWidth: '2px',
+                      shadow: 'sm',
+                    }}
+                  >
+                    <Icon as={MdSpaceDashboard} mr='4' /> Dashboard
+                  </Button>
                 </MenuItem>
-                <MenuItem
-                  as={NextLink}
-                  href='/login'
-                  bg='white'
-                  _hover={{ bg: 'white' }}
-                >
-                  Tickets
+                <MenuItem bg='white'>
+                  <Button
+                    as={NextLink}
+                    href='/tickets'
+                    borderRadius='md'
+                    style={{ textDecoration: 'none' }}
+                    w='100%'
+                    px='4'
+                    alignItems='center'
+                    justifyContent='flex-start'
+                    bg='white'
+                    _hover={{
+                      bg: 'blue.200',
+                      borderColor: 'gray.800',
+                      borderWidth: '2px',
+                      shadow: 'sm',
+                    }}
+                  >
+                    <Icon as={FaTicket} mr='4' /> Tickets
+                  </Button>
                 </MenuItem>
-                <MenuItem
-                  as={NextLink}
-                  href='/login'
-                  bg='white'
-                  _hover={{ bg: 'white' }}
-                  onClick={handleLogout}
-                >
-                  Logout
+                <MenuItem bg='white'>
+                  <Button
+                    w='100%'
+                    borderRadius='md'
+                    alignItems='center'
+                    justifyContent='flex-start'
+                    px='4'
+                    bg='white'
+                    fontSize='sm'
+                    _hover={{
+                      bg: 'red.200',
+                      borderColor: 'gray.800',
+                      borderWidth: '2px',
+                    }}
+                    onClick={handleLogout}
+                  >
+                    <Icon as={FaRightFromBracket} mr='4' /> Logout
+                  </Button>
                 </MenuItem>
               </MenuList>
             </Menu>
           </Stack>
         ) : (
-          <Stack spacing='6' direction='row' ml='4'>
-            <Link
+          <Stack spacing='4' direction='row' ml='4'>
+            <Button
               as={NextLink}
               href='/register'
-              borderRadius='sm'
+              borderRadius='lg'
               style={{ textDecoration: 'none' }}
+              w='100%'
+              px='4'
+              bg='white'
+              borderColor='gray.800'
+              borderWidth='2px'
+              fontSize='sm'
+              _hover={{
+                bg: 'green.200',
+                shadow: 'sm',
+              }}
             >
               Register
-            </Link>
-            <Link
+            </Button>
+            <Button
               as={NextLink}
               href='/login'
-              borderRadius='sm'
+              borderRadius='lg'
               style={{ textDecoration: 'none' }}
+              w='100%'
+              px='4'
+              bg='yellow.200'
+              borderColor='gray.800'
+              borderWidth='2px'
+              fontSize='sm'
+              _hover={{
+                bg: 'yellow.300',
+                shadow: 'sm',
+              }}
             >
               Login
-            </Link>
+            </Button>
           </Stack>
         )}
       </HStack>
