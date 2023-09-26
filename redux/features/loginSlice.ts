@@ -17,11 +17,34 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const verifyUser = createAsyncThunk(
+  'login/verifyUser',
+  async (token: string) => {
+    try {
+      const response = await axios.post(
+        'http://nawaytes.cloud:8080/auth/check-token',
+        token,
+        {
+          headers: {
+            'Content-Type': 'text/plain',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+);
+
 const loginSlice = createSlice({
   name: 'login',
   initialState: {
     user: {},
     loading: false,
+    token: '',
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -30,12 +53,14 @@ const loginSlice = createSlice({
         state.loading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.user = action.payload;
         state.loading = false;
+        state.user = action.payload.user;
+        state.token = action.payload.token;
       })
       .addCase(loginUser.rejected, (state) => {
         state.loading = false;
         state.user = {};
+        state.token = '';
       });
   },
 });
