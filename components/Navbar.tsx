@@ -16,30 +16,53 @@ import {
   Stack,
   Icon,
 } from '@chakra-ui/react';
-import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
+import { AddIcon } from '@chakra-ui/icons';
 import SearchInput from './SearchInput';
 import NextLink from 'next/link';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/utils/firebase';
 import { FaRightFromBracket, FaTicket } from 'react-icons/fa6';
 import { MdSpaceDashboard } from 'react-icons/md';
+import { useRouter } from 'next/navigation';
+import { BiDotsVertical } from 'react-icons/bi';
 
 export default function Navbar() {
   const [user] = useAuthState(auth);
+  const router = useRouter();
   const accessToken =
     typeof window !== 'undefined' && localStorage.getItem('accessToken');
   const localUser =
     typeof window !== 'undefined' &&
     JSON.parse(localStorage.getItem('localUser') || '{}');
+  const selectedAvatar =
+    typeof window !== 'undefined' && localStorage.getItem('selectedAvatar');
+
+  const randomAvatars = () => {
+    const avatars = [
+      './images/avatars/avatar1.png',
+      './images/avatars/avatar2.png',
+      './images/avatars/avatar3.png',
+      './images/avatars/avatar4.png',
+      './images/avatars/avatar5.png',
+      './images/avatars/avatar6.png',
+    ];
+    if (selectedAvatar) {
+      return selectedAvatar;
+    } else {
+      const randomIndex = Math.floor(Math.random() * avatars.length);
+      const randomAvatar = avatars[randomIndex];
+      localStorage.setItem('selectedAvatar', randomAvatar);
+      return randomAvatar;
+    }
+  };
 
   const handleLogout = () => {
     auth.signOut();
-    if (accessToken) {
-      localStorage.removeItem('accessToken');
-    }
-    if (localUser) {
-      localStorage.removeItem('localUser');
-    }
+    if (accessToken) localStorage.removeItem('accessToken');
+    if (localUser) localStorage.removeItem('localUser');
+    if (selectedAvatar) localStorage.removeItem('selectedAvatar');
+
+    router.push('/login');
   };
 
   return (
@@ -50,7 +73,7 @@ export default function Navbar() {
       <HStack w='80%'>
         <SearchInput />
         {user || accessToken ? (
-          <Stack spacing='4' direction='row'>
+          <Stack spacing='6' direction='row'>
             <Button
               as={NextLink}
               href='/create'
@@ -58,7 +81,7 @@ export default function Navbar() {
               bg='yellow.200'
               borderWidth='2px'
               borderColor='gray.800'
-              borderRadius='lg'
+              borderRadius='sm'
               px='3'
               ml='4'
               _hover={{ bg: 'yellow.300' }}
@@ -69,23 +92,23 @@ export default function Navbar() {
             <Menu>
               <MenuButton
                 as={Button}
-                rightIcon={<ChevronDownIcon />}
                 bg='white'
                 _hover={{ bg: 'white' }}
                 _active={{ bg: 'white' }}
                 p='0'
               >
-                <Image
-                  src={
-                    user ? user.photoURL || undefined : './images/avatar.png'
-                  }
-                  borderRadius='full'
-                  maxWidth='40px'
-                />
+                <HStack spacing='0'>
+                  <Image
+                    src={user ? user.photoURL || undefined : randomAvatars()}
+                    borderRadius='sm'
+                    maxWidth='40px'
+                  />
+                  <Icon as={BiDotsVertical} boxSize='6' />
+                </HStack>
               </MenuButton>
               <MenuList
                 mt='2'
-                borderRadius='lg'
+                borderRadius='sm'
                 borderColor='gray.800'
                 borderWidth='2px'
               >
@@ -93,7 +116,7 @@ export default function Navbar() {
                   <Button
                     as={NextLink}
                     href='/dashboard'
-                    borderRadius='md'
+                    borderRadius='sm'
                     style={{ textDecoration: 'none' }}
                     w='100%'
                     px='4'
@@ -114,7 +137,7 @@ export default function Navbar() {
                   <Button
                     as={NextLink}
                     href='/tickets'
-                    borderRadius='md'
+                    borderRadius='sm'
                     style={{ textDecoration: 'none' }}
                     w='100%'
                     px='4'
@@ -134,7 +157,7 @@ export default function Navbar() {
                 <MenuItem bg='white'>
                   <Button
                     w='100%'
-                    borderRadius='md'
+                    borderRadius='sm'
                     alignItems='center'
                     justifyContent='flex-start'
                     px='4'
@@ -158,7 +181,7 @@ export default function Navbar() {
             <Button
               as={NextLink}
               href='/register'
-              borderRadius='lg'
+              borderRadius='sm'
               style={{ textDecoration: 'none' }}
               w='100%'
               px='4'
@@ -176,7 +199,7 @@ export default function Navbar() {
             <Button
               as={NextLink}
               href='/login'
-              borderRadius='lg'
+              borderRadius='sm'
               style={{ textDecoration: 'none' }}
               w='100%'
               px='4'

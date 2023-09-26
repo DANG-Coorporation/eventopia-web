@@ -10,13 +10,17 @@ import { SearchIcon } from '@chakra-ui/icons';
 export default function SearchInput() {
   return (
     <FormControl>
-      <InputGroup maxWidth='lg' shadow='sm' borderRadius='lg'>
+      <InputGroup
+        maxWidth={{ base: 'full', lg: 'xl' }}
+        shadow='sm'
+        borderRadius='sm'
+      >
         <Input
           type='text'
           placeholder='Search your event'
           borderWidth='2px'
           borderColor='gray.800'
-          borderRadius='lg'
+          borderRadius='sm'
           focusBorderColor='gray.800'
           fontSize='sm'
           _focus={{ borderWidth: '1px' }}
