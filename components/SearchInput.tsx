@@ -17,8 +17,9 @@ export default function SearchInput() {
           borderWidth='2px'
           borderColor='gray.800'
           borderRadius='lg'
-          focusBorderColor='blue.200'
+          focusBorderColor='gray.800'
           fontSize='sm'
+          _focus={{ borderWidth: '1px' }}
           _hover={{ borderColor: 'none' }}
         />
         <InputRightElement>
