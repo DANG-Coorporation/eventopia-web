@@ -116,10 +116,10 @@ export default function RegisterForm() {
       <Button
         w='100%'
         bg='white'
-        borderWidth='1px'
-        borderColor='gray.300'
+        borderWidth='2px'
+        borderColor='gray.800'
         borderRadius='sm'
-        _hover={{ shadow: 'sm' }}
+        _hover={{ bg: 'yellow.200', shadow: 'sm' }}
         onClick={handleGoogleRegister}
         size='lg'
         fontSize='md'
@@ -127,12 +127,12 @@ export default function RegisterForm() {
         <Icon as={FcGoogle} mr='2' boxSize={6} /> Register with Google
       </Button>
       <Box position='relative' my='8'>
-        <Divider borderColor='gray.300' />
+        <Divider borderColor='gray.800' />
         <AbsoluteCenter
           bg='white'
-          px='4'
+          px='3'
           borderWidth='1px'
-          borderColor='gray.300'
+          borderColor='gray.800'
           borderRadius='full'
           fontSize='sm'
         >
@@ -151,7 +151,12 @@ export default function RegisterForm() {
             borderRadius='sm'
             name='name'
             onChange={handleForm}
-            borderColor='gray.300'
+            borderWidth='2px'
+            borderColor='gray.800'
+            focusBorderColor='gray.800'
+            _invalid={{ borderWidth: '2px', borderColor: 'red.500' }}
+            _focus={{ borderWidth: '1px' }}
+            _hover={{ borderColor: 'none' }}
             size='lg'
             fontSize='sm'
           />
@@ -169,7 +174,12 @@ export default function RegisterForm() {
             borderRadius='sm'
             name='email'
             onChange={handleForm}
-            borderColor='gray.300'
+            borderWidth='2px'
+            borderColor='gray.800'
+            focusBorderColor='gray.800'
+            _invalid={{ borderWidth: '2px', borderColor: 'red.500' }}
+            _focus={{ borderWidth: '1px' }}
+            _hover={{ borderColor: 'none' }}
             size='lg'
             fontSize='sm'
           />
@@ -188,7 +198,12 @@ export default function RegisterForm() {
               borderRadius='sm'
               name='password'
               onChange={handleForm}
-              borderColor='gray.300'
+              borderWidth='2px'
+              borderColor='gray.800'
+              focusBorderColor='gray.800'
+              _invalid={{ borderWidth: '2px', borderColor: 'red.500' }}
+              _focus={{ borderWidth: '1px' }}
+              _hover={{ borderColor: 'none' }}
               fontSize='sm'
             />
             <FormLabel>Password</FormLabel>
@@ -200,6 +215,7 @@ export default function RegisterForm() {
                 aria-label={show ? 'Hide password' : 'Show password'}
                 icon={show ? <ViewOffIcon /> : <ViewIcon />}
                 onClick={showPassword}
+                _hover={show ? { bg: 'yellow.200' } : { bg: 'red.200' }}
               />
             </InputRightElement>
           </InputGroup>
@@ -207,7 +223,6 @@ export default function RegisterForm() {
         </FormControl>
         <Button
           type='submit'
-          colorScheme='orange'
           w='100%'
           isLoading={loadingState}
           loadingText='Registering'
@@ -215,6 +230,10 @@ export default function RegisterForm() {
           mb='4'
           size='lg'
           fontSize='md'
+          borderWidth='2px'
+          borderColor='gray.800'
+          bg='green.200'
+          _hover={{ bg: 'green.300', shadow: 'sm' }}
         >
           Register
         </Button>
@@ -224,10 +243,10 @@ export default function RegisterForm() {
         <Link
           as={NextLink}
           href='/login'
-          color='orange.500'
+          color='yellow.500'
           textDecoration='underline'
           ml='2'
-          _hover={{ color: 'orange.300' }}
+          _hover={{ color: 'yellow.400' }}
         >
           Login
         </Link>
