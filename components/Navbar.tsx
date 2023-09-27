@@ -188,6 +188,7 @@ export default function Navbar() {
               bg='white'
               borderColor='gray.800'
               borderWidth='2px'
+              size='lg'
               fontSize='sm'
               _hover={{
                 bg: 'green.200',
@@ -206,6 +207,7 @@ export default function Navbar() {
               bg='yellow.200'
               borderColor='gray.800'
               borderWidth='2px'
+              size='lg'
               fontSize='sm'
               _hover={{
                 bg: 'yellow.300',

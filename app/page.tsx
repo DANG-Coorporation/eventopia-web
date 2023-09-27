@@ -3,11 +3,15 @@
 import { Stack, useBreakpointValue } from '@chakra-ui/react';
 import Navbar from '@/components/Navbar';
 import NavbarMobile from '@/components/NavbarMobile';
-import CardList from '@/components/CardList';
 import SearchInput from '@/components/SearchInput';
+import Carousel from '@/components/Carousel';
+import CardList from '@/components/CardList';
 
 export default function Home() {
-  const isSmallScreen = useBreakpointValue({ base: true, md: false });
+  const isSmallScreen = useBreakpointValue({
+    base: true,
+    md: false,
+  }, { ssr: false });
   return (
     <Stack>
       {isSmallScreen ? <NavbarMobile /> : <Navbar />}
@@ -16,6 +20,7 @@ export default function Home() {
           <SearchInput />
         </Stack>
       ) : null}
+      <Carousel />
       <CardList />
     </Stack>
   );
