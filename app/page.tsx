@@ -5,13 +5,14 @@ import Navbar from '@/components/Navbar';
 import NavbarMobile from '@/components/NavbarMobile';
 import SearchInput from '@/components/SearchInput';
 import Carousel from '@/components/Carousel';
+import CategoryList from '@/components/CategoryList';
 import CardList from '@/components/CardList';
 
 export default function Home() {
   const isSmallScreen = useBreakpointValue({
     base: true,
     md: false,
-  }, { ssr: false });
+  });
   return (
     <Stack>
       {isSmallScreen ? <NavbarMobile /> : <Navbar />}
@@ -21,6 +22,7 @@ export default function Home() {
         </Stack>
       ) : null}
       <Carousel />
+      <CategoryList />
       <CardList />
     </Stack>
   );

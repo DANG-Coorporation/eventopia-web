@@ -5,7 +5,17 @@ import moment from 'moment';
 export default function CarouselCard(props: any) {
   const formattedDate = moment(props.date).format('ll');
 
-  const categoryColors = ['red.200', 'green.200', 'blue.200', 'yellow.200'];
+  const categoryColors = [
+    'red.200',
+    'orange.200',
+    'yellow.200',
+    'green.200',
+    'teal.200',
+    'blue.200',
+    'cyan.200',
+    'purple.200',
+    'pink.200',
+  ];
   const colorIndex = props.cardIndex % categoryColors.length;
 
   return (
