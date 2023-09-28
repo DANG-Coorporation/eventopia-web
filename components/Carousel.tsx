@@ -204,7 +204,7 @@ export default function Carousel(props: any) {
   ];
 
   return (
-    <Stack px={{ base: 6, lg: 20 }} mt='4' mb='8'>
+    <Stack px={{ base: 6, lg: 20 }} mt='4' mb='10'>
       <Stack w='100%'>
         <link
           rel='stylesheet'
