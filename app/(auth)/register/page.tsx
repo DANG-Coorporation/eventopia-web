@@ -11,6 +11,7 @@ export default function Register() {
       columns={{ base: 1, lg: 2 }}
       justifyContent='center'
       alignItems='center'
+      h='100vh'
     >
       <Stack alignItems='center' justifyContent='center'>
         <RegisterForm />
@@ -21,7 +22,7 @@ export default function Register() {
           alignItems='center'
           position='relative'
           w='100%'
-          h='100vh'
+          h='100%'
         >
           <Image
             src='/images/auth-img.jpeg'

@@ -112,10 +112,10 @@ export default function LoginForm() {
       <Button
         w='100%'
         bg='white'
-        borderWidth='1px'
-        borderColor='gray.300'
+        borderWidth='2px'
+        borderColor='gray.800'
         borderRadius='sm'
-        _hover={{ shadow: 'sm' }}
+        _hover={{ shadow: 'sm', bg: 'blue.200' }}
         onClick={handleGoogleLogin}
         size='lg'
         fontSize='md'
@@ -123,12 +123,12 @@ export default function LoginForm() {
         <Icon as={FcGoogle} mr='2' boxSize={6} /> Login with Google
       </Button>
       <Box position='relative' my='8'>
-        <Divider borderColor='gray.300' />
+        <Divider borderColor='gray.800' />
         <AbsoluteCenter
           bg='white'
-          px='4'
+          px='3'
           borderWidth='1px'
-          borderColor='gray.300'
+          borderColor='gray.800'
           borderRadius='full'
           fontSize='sm'
         >
@@ -147,7 +147,12 @@ export default function LoginForm() {
             borderRadius='sm'
             name='email'
             onChange={handleForm}
-            borderColor='gray.300'
+            borderColor='gray.800'
+            borderWidth='2px'
+            focusBorderColor='gray.800'
+            _invalid={{ borderWidth: '2px', borderColor: 'red.500' }}
+            _focus={{ borderWidth: '1px' }}
+            _hover={{ borderColor: 'none' }}
             size='lg'
             fontSize='sm'
           />
@@ -166,7 +171,12 @@ export default function LoginForm() {
               borderRadius='sm'
               name='password'
               onChange={handleForm}
-              borderColor='gray.300'
+              borderColor='gray.800'
+              borderWidth='2px'
+              focusBorderColor='gray.800'
+              _invalid={{ borderWidth: '2px', borderColor: 'red.500' }}
+              _focus={{ borderWidth: '1px' }}
+              _hover={{ borderColor: 'none' }}
               fontSize='sm'
             />
             <FormLabel>Password</FormLabel>
@@ -178,6 +188,7 @@ export default function LoginForm() {
                 aria-label={show ? 'Hide password' : 'Show password'}
                 icon={show ? <ViewOffIcon /> : <ViewIcon />}
                 onClick={showPassword}
+                _hover={show ? { bg: 'yellow.200' } : { bg: 'red.200' }}
               />
             </InputRightElement>
           </InputGroup>
@@ -185,7 +196,9 @@ export default function LoginForm() {
         </FormControl>
         <Button
           type='submit'
-          colorScheme='orange'
+          bg='yellow.200'
+          borderWidth='2px'
+          borderColor='gray.800'
           w='100%'
           isLoading={loadingState}
           loadingText='Logging in'
@@ -193,6 +206,7 @@ export default function LoginForm() {
           mb='4'
           size='lg'
           fontSize='md'
+          _hover={{ shadow: 'sm', bg: 'yellow.300' }}
         >
           Login
         </Button>
@@ -202,10 +216,10 @@ export default function LoginForm() {
         <Link
           as={NextLink}
           href='/register'
-          color='orange.500'
+          color='green.500'
           textDecoration='underline'
           ml='2'
-          _hover={{ color: 'orange.300' }}
+          _hover={{ color: 'green.400' }}
         >
           Register
         </Link>

@@ -6,7 +6,7 @@ COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
 # Build
-RUN yarn build
+RUN npm run build
 
 # Production stage
 FROM node:latest
@@ -23,40 +23,3 @@ COPY --from=BUILD_IMAGE /app/next.config.js ./
 EXPOSE 3000
 # Start the application
 CMD ["npm", "run", "start"]
-
-# Tahap pertama: Build aplikasi Next.js
-# FROM node:16.13.1-alpine AS build
-
-# # Membuat direktori kerja di dalam container
-# WORKDIR /app
-
-# # Menyalin package.json dan package-lock.json (jika ada)
-# COPY package*.json ./
-
-# # Menjalankan npm install untuk menginstal dependensi aplikasi
-# RUN npm install
-
-# # Menyalin semua file aplikasi ke dalam container
-# COPY . .
-
-# # Menjalankan perintah untuk membangun aplikasi Next.js
-# RUN npm run build
-
-# # Tahap kedua: Menjalankan aplikasi yang sudah dibangun
-# FROM node:16.13.1-alpine
-
-# # Membuat direktori kerja di dalam container
-# WORKDIR /app
-
-# # Menyalin hanya file yang dibutuhkan dari tahap pertama
-# COPY --from=build /app/package.json /app/package-lock.json ./
-# COPY --from=build /app/.next ./.next
-# COPY --from=build /app/next.config.js ./
-# COPY --from=build /app/node_modules ./node_modules
-
-
-# # Menyalin file lain yang dibutuhkan
-# COPY public ./public
-# EXPOSE 3000
-# # Menjalankan perintah untuk memulai aplikasi Next.js
-# CMD ["npm", "start"]
