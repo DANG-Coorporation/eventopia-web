@@ -13,8 +13,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const theme = extendTheme({
     colors: {
       brand: {
-        100: '#f7fafc',
-        900: '#1a202c',
+        100: "#f7fafc",
+        900: "#1a202c",
       },
     },
     components: {
@@ -27,7 +27,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
                   ...activeLabelStyles,
                 },
               },
-              'input:not(:placeholder-shown) + label, .chakra-select__wrapper + label, textarea:not(:placeholder-shown) ~ label':
+              "input:not(:placeholder-shown) + label, .chakra-select__wrapper + label, textarea:not(:placeholder-shown) ~ label":
                 {
                   ...activeLabelStyles,
                 },
@@ -35,13 +35,67 @@ export function Providers({ children }: { children: React.ReactNode }) {
                 top: 0,
                 left: 0,
                 zIndex: 2,
-                position: 'absolute',
-                backgroundColor: 'white',
-                pointerEvents: 'none',
+                position: "absolute",
+                backgroundColor: "white",
+                pointerEvents: "none",
                 mx: 3,
                 px: 1,
                 my: 3,
-                transformOrigin: 'left top',
+                transformOrigin: "left top",
+              },
+            },
+          },
+        },
+      },
+      Input: {
+        variants: {
+          noBorder: {
+            borderColor: "transparent",
+            _hover: {
+              borderColor: "transparent",
+              boxShadow: "none",
+            },
+            _active: {
+              borderColor: "transparent",
+              boxShadow: "none",
+            },
+            _focus: {
+              borderColor: "transparent",
+              boxShadow: "none",
+            },
+            focusBorderColor: "transparent",
+          },
+        },
+      },
+      Tabs: {
+        variants: {
+          strongBorder: {
+            tab: {
+              borderLeft: "0px",
+              borderRight: "0px",
+              border: "2px",
+              borderColor: "white",
+              borderBottom: "2px",
+              width: "100%",
+              borderRadius: 0,
+              color: "black",
+              margin: "0px",
+              _selected: {
+                borderBottom: "0",
+                borderColor: "black",
+                fontWeight: "bold",
+                color: "black",
+              },
+              _focus: {
+                borderColor: "black",
+                fontWeight: "bold",
+                color: "black",
+                boxShadow: "none",
+              },
+              _active: {
+                borderColor: "black",
+                fontWeight: "bold",
+                color: "black",
               },
             },
           },
