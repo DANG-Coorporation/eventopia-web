@@ -101,6 +101,43 @@ export function Providers({ children }: { children: React.ReactNode }) {
           },
         },
       },
+      Button: {
+        variants: {
+          strongBlue: {
+            borderRadius: 0,
+            border: "2px solid black",
+            bgColor: "#42A5F5",
+            _hover: {
+              bgColor: "#0D47A1",
+              color: "white",
+              _disabled: {
+                bgColor: "#42A5F5",
+                color: "black",
+              },
+            },
+            _disabled: {
+              bgColor: "#42A5F5",
+            },
+          },
+          strongWhite: {
+            borderRadius: 0,
+            border: "2px solid black",
+            bgColor: "white",
+            _hover: {
+              bgColor: "#B0BEC5",
+            },
+          },
+          strongRed: {
+            borderRadius: 0,
+            border: "2px solid black",
+            bgColor: "#F06292",
+            _hover: {
+              bgColor: "#C62828",
+              color: "white",
+            },
+          },
+        },
+      },
     },
   });
 

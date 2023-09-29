@@ -35,6 +35,7 @@ import {
 } from "react-icons/bs";
 import bgImage from "@/public/images/create-event-bg.jpg";
 import RichTextEditor from "@/components/RichTextEditor";
+import GetTimeModal from "@/components/create_event/modal/GetTimeModal";
 export default function CreateEvent() {
   // const isSmallScreen = useBreakpointValue<boolean>({ base: true, lg: false });
 
@@ -499,6 +500,7 @@ export default function CreateEvent() {
             </TabPanels>
           </Tabs>
         </Box>
+        <GetTimeModal />
       </VStack>
       <Box
         position={"fixed"}
@@ -523,29 +525,10 @@ export default function CreateEvent() {
           </Show>
 
           <Spacer />
-          <Button
-            m={2}
-            height={"52px"}
-            borderRadius={0}
-            border={"2px solid black"}
-            bgColor={"white"}
-            _hover={{
-              bgColor: "#B0BEC5",
-            }}
-          >
+          <Button m={2} height={"52px"} variant='strongWhite'>
             Simpan Draft
           </Button>
-          <Button
-            m={2}
-            height={"52px"}
-            borderRadius={0}
-            border={"2px solid black"}
-            bgColor={"#42A5F5"}
-            _hover={{
-              bgColor: "#0D47A1",
-              color: "white",
-            }}
-          >
+          <Button variant='strongBlue' m={2} height={"52px"}>
             Buat Event Sekarang
           </Button>
           <Show below='md'>
