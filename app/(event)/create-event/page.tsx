@@ -1,9 +1,15 @@
 "use client";
 
+import RichTextEditor from "@/components/RichTextEditor";
+import GetLocationModal from "@/components/create_event/modal/GetLocationModal";
+import GetTimeModal from "@/components/create_event/modal/GetTimeModal";
+import {
+  openDateTime,
+  openLocation,
+} from "@/redux/features/create_event/modalSlice";
 import {
   Box,
   Button,
-  Center,
   Checkbox,
   Divider,
   Grid,
@@ -23,24 +29,18 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import {
-  BsBox2Heart,
   BsCalendarRange,
   BsClock,
-  BsClockFill,
   BsFillPencilFill,
-  BsFillSpeakerFill,
   BsPinMapFill,
   BsPlusCircle,
   BsTrash3Fill,
 } from "react-icons/bs";
-import bgImage from "@/public/images/create-event-bg.jpg";
-import RichTextEditor from "@/components/RichTextEditor";
-import GetTimeModal from "@/components/create_event/modal/GetTimeModal";
 import { useDispatch } from "react-redux";
-import { openDateTime } from "@/redux/features/create_event/modalSlice";
 export default function CreateEvent() {
   // const isSmallScreen = useBreakpointValue<boolean>({ base: true, lg: false });
   const dispatch = useDispatch();
+
   return (
     <>
       <VStack width={"98vw"} mb={"100px"}>
@@ -167,6 +167,7 @@ export default function CreateEvent() {
               border={"2px"}
               py={2}
               cursor={"pointer"}
+              onClick={() => dispatch(openLocation())}
             >
               <VStack>
                 <HStack>
@@ -510,6 +511,7 @@ export default function CreateEvent() {
           </Tabs>
         </Box>
         <GetTimeModal />
+        <GetLocationModal />
       </VStack>
       <Box
         position={"fixed"}

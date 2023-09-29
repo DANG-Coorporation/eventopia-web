@@ -94,7 +94,7 @@ export default function NavbarMenu() {
         <Button
           as={Button}
           bg='white'
-          _hover={{ bg: 'white' }}
+          _hover={{ bg: "white" }}
           p='0'
           onClick={onOpen}
         >
@@ -114,7 +114,7 @@ export default function NavbarMenu() {
           borderRadius='sm'
           borderColor='gray.800'
           borderWidth='2px'
-          _hover={{ bg: 'yellow.300' }}
+          _hover={{ bg: "yellow.300" }}
           onClick={onOpen}
         />
       )}
@@ -166,10 +166,10 @@ export default function NavbarMenu() {
                 borderRadius='sm'
                 mb='4'
                 as={NextLink}
-                href='/create'
+                href='/create-event'
                 size='lg'
                 fontSize='md'
-                _hover={{ bg: 'yellow.300' }}
+                _hover={{ bg: "yellow.300" }}
               >
                 <Icon as={AddIcon} mr='2' /> Create Event
               </Button>
@@ -178,7 +178,7 @@ export default function NavbarMenu() {
                   as={NextLink}
                   href='/'
                   borderRadius='sm'
-                  style={{ textDecoration: 'none' }}
+                  style={{ textDecoration: "none" }}
                   w='100%'
                   px='4'
                   alignItems='center'
@@ -187,10 +187,10 @@ export default function NavbarMenu() {
                   size='lg'
                   fontSize='md'
                   _hover={{
-                    bg: 'blue.200',
-                    borderColor: 'gray.800',
-                    borderWidth: '2px',
-                    shadow: 'sm',
+                    bg: "blue.200",
+                    borderColor: "gray.800",
+                    borderWidth: "2px",
+                    shadow: "sm",
                   }}
                   onClick={onClose}
                 >
@@ -200,7 +200,7 @@ export default function NavbarMenu() {
                   as={NextLink}
                   href='/dashboard'
                   borderRadius='sm'
-                  style={{ textDecoration: 'none' }}
+                  style={{ textDecoration: "none" }}
                   w='100%'
                   px='4'
                   alignItems='center'
@@ -209,10 +209,10 @@ export default function NavbarMenu() {
                   size='lg'
                   fontSize='md'
                   _hover={{
-                    bg: 'blue.200',
-                    borderColor: 'gray.800',
-                    borderWidth: '2px',
-                    shadow: 'sm',
+                    bg: "blue.200",
+                    borderColor: "gray.800",
+                    borderWidth: "2px",
+                    shadow: "sm",
                   }}
                 >
                   <Icon as={MdSpaceDashboard} mr='4' /> Dashboard
@@ -221,7 +221,7 @@ export default function NavbarMenu() {
                   as={NextLink}
                   href='/tickets'
                   borderRadius='sm'
-                  style={{ textDecoration: 'none' }}
+                  style={{ textDecoration: "none" }}
                   w='100%'
                   px='4'
                   alignItems='center'
@@ -230,10 +230,10 @@ export default function NavbarMenu() {
                   size='lg'
                   fontSize='md'
                   _hover={{
-                    bg: 'blue.200',
-                    borderColor: 'gray.800',
-                    borderWidth: '2px',
-                    shadow: 'sm',
+                    bg: "blue.200",
+                    borderColor: "gray.800",
+                    borderWidth: "2px",
+                    shadow: "sm",
                   }}
                 >
                   <Icon as={FaTicket} mr='4' /> Tickets
@@ -246,7 +246,7 @@ export default function NavbarMenu() {
                 as={NextLink}
                 href='/'
                 borderRadius='sm'
-                style={{ textDecoration: 'none' }}
+                style={{ textDecoration: "none" }}
                 w='100%'
                 px='4'
                 alignItems='center'
@@ -257,8 +257,8 @@ export default function NavbarMenu() {
                 size='lg'
                 fontSize='md'
                 _hover={{
-                  bg: 'blue.300',
-                  shadow: 'sm',
+                  bg: "blue.300",
+                  shadow: "sm",
                 }}
                 onClick={onClose}
               >
@@ -277,7 +277,7 @@ export default function NavbarMenu() {
                 size='lg'
                 fontSize='md'
                 _hover={{
-                  bg: 'red.200',
+                  bg: "red.200",
                 }}
                 onClick={handleLogout}
               >
@@ -291,7 +291,7 @@ export default function NavbarMenu() {
                   as={NextLink}
                   href='/register'
                   borderRadius='sm'
-                  style={{ textDecoration: 'none' }}
+                  style={{ textDecoration: "none" }}
                   w='100%'
                   px='4'
                   bg='white'
@@ -300,8 +300,8 @@ export default function NavbarMenu() {
                   size='lg'
                   fontSize='md'
                   _hover={{
-                    bg: 'green.200',
-                    shadow: 'sm',
+                    bg: "green.200",
+                    shadow: "sm",
                   }}
                 >
                   Register
@@ -310,7 +310,7 @@ export default function NavbarMenu() {
                   as={NextLink}
                   href='/login'
                   borderRadius='sm'
-                  style={{ textDecoration: 'none' }}
+                  style={{ textDecoration: "none" }}
                   w='100%'
                   px='4'
                   bg='yellow.200'
@@ -319,8 +319,8 @@ export default function NavbarMenu() {
                   size='lg'
                   fontSize='md'
                   _hover={{
-                    bg: 'yellow.300',
-                    shadow: 'sm',
+                    bg: "yellow.300",
+                    shadow: "sm",
                   }}
                 >
                   Login
