@@ -1,5 +1,10 @@
 import { hourList } from "@/common/constants/hourList";
 import {
+  closeDateTime,
+  openDateTime,
+} from "@/redux/features/create_event/modalSlice";
+import { RootState } from "@/redux/store";
+import {
   Box,
   Button,
   FormControl,
@@ -20,12 +25,15 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function GetTimeModal() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const isOpen = useSelector(
+    (state: RootState) => state.modalCreateEvent.isOpenDateTime
+  );
+  const dispatch = useDispatch();
   const [eventDate, setEventDate] = useState({
     startDate: "",
     endDate: "",
@@ -58,9 +66,11 @@ export default function GetTimeModal() {
   const dateNow: string = new Date().toISOString().split("T")[0];
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
-
-      <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+      <Modal
+        blockScrollOnMount={false}
+        isOpen={isOpen}
+        onClose={() => dispatch(closeDateTime())}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader> </ModalHeader>
@@ -90,6 +100,7 @@ export default function GetTimeModal() {
                       <FormLabel>Tanggal Mulai</FormLabel>
                       <Input
                         type='date'
+                        placeholder='dd-mm-yyyy'
                         min={dateNow}
                         onChange={(e) =>
                           setEventDate({
@@ -101,6 +112,7 @@ export default function GetTimeModal() {
                       <FormLabel>Tanggal Berakhir</FormLabel>
                       <Input
                         type='date'
+                        placeholder='dd-mm-yyyy'
                         min={
                           eventDate.startDate === ""
                             ? dateNow
@@ -169,7 +181,11 @@ export default function GetTimeModal() {
           </ModalBody>
 
           <ModalFooter>
-            <Button variant={"strongRed"} mr={3} onClick={onClose}>
+            <Button
+              variant={"strongRed"}
+              mr={3}
+              onClick={() => dispatch(closeDateTime())}
+            >
               Batal
             </Button>
             <Button variant='strongWhite'>Simpan</Button>

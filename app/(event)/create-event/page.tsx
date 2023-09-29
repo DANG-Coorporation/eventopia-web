@@ -36,9 +36,11 @@ import {
 import bgImage from "@/public/images/create-event-bg.jpg";
 import RichTextEditor from "@/components/RichTextEditor";
 import GetTimeModal from "@/components/create_event/modal/GetTimeModal";
+import { useDispatch } from "react-redux";
+import { openDateTime } from "@/redux/features/create_event/modalSlice";
 export default function CreateEvent() {
   // const isSmallScreen = useBreakpointValue<boolean>({ base: true, lg: false });
-
+  const dispatch = useDispatch();
   return (
     <>
       <VStack width={"98vw"} mb={"100px"}>
@@ -99,7 +101,13 @@ export default function CreateEvent() {
             gap={1}
             my={2}
           >
-            <Box width={"100%"} border={"2px"} py={2} cursor={"pointer"}>
+            <Box
+              width={"100%"}
+              border={"2px"}
+              py={2}
+              cursor={"pointer"}
+              onClick={() => dispatch(openDateTime())}
+            >
               <VStack>
                 <HStack>
                   {" "}
@@ -437,6 +445,7 @@ export default function CreateEvent() {
                     lg: "1fr 2fr",
                   }}
                   mt={7}
+                  gap={2}
                 >
                   <Box width={"100%"} minW={"100px"}>
                     <VStack alignItems={"start"}>
@@ -457,7 +466,7 @@ export default function CreateEvent() {
                       <Checkbox>Jenis Kelamin</Checkbox>
                     </VStack>
                   </Box>
-                  <Box width={"100%"} h={"100px"}>
+                  <Box width={"100%"} h={"100px"} my={3}>
                     <VStack alignItems={"start"} gap={2}>
                       <Text fontSize={"lg"} mt={-2} fontWeight={"bold"}>
                         Pengaturan Tambahan
