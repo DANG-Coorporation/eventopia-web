@@ -60,13 +60,13 @@ export default function MarkerMap({ lat, long }: MarkerMapProps) {
         ref={markerRef!}
         icon={DefaultIcon}
       >
-        <Popup minWidth={90}>
+        {/* <Popup minWidth={90}>
           <span onClick={toggleDraggable}>
             {draggable
               ? "Marker is draggable"
               : "Click here to make marker draggable"}
           </span>
-        </Popup>
+        </Popup> */}
       </Marker>
     </>
   );

@@ -1,10 +1,12 @@
 "use client";
 
 import RichTextEditor from "@/components/RichTextEditor";
+import GetFormatModal from "@/components/create_event/modal/GetFormatModal";
 import GetLocationModal from "@/components/create_event/modal/GetLocationModal";
 import GetTimeModal from "@/components/create_event/modal/GetTimeModal";
 import {
   openDateTime,
+  openFormat,
   openLocation,
 } from "@/redux/features/create_event/modalSlice";
 import {
@@ -90,7 +92,14 @@ export default function CreateEvent() {
             borderRadius={0}
             mt={2}
           />
-          <HStack mx={4} my={2} cursor={"pointer"}>
+          <HStack
+            mx={4}
+            my={2}
+            cursor={"pointer"}
+            onClick={() => {
+              dispatch(openFormat());
+            }}
+          >
             <Text>Format Event</Text>
             <BsFillPencilFill />
           </HStack>
@@ -510,8 +519,6 @@ export default function CreateEvent() {
             </TabPanels>
           </Tabs>
         </Box>
-        <GetTimeModal />
-        <GetLocationModal />
       </VStack>
       <Box
         position={"fixed"}
@@ -547,6 +554,9 @@ export default function CreateEvent() {
           </Show>
         </HStack>
       </Box>
+      <GetTimeModal />
+      <GetLocationModal />
+      <GetFormatModal />
     </>
   );
 }
