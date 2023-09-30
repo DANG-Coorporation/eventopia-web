@@ -16,9 +16,11 @@ import {
   FormLabel,
   Select,
   Input,
+  VStack,
+  Box,
 } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function GetLocationModal() {
@@ -33,7 +35,6 @@ export default function GetLocationModal() {
       ssr: false,
     }
   );
-
   return (
     <>
       <Modal
@@ -61,7 +62,9 @@ export default function GetLocationModal() {
               <Input placeholder='Masukkan Lokasi' type='text' tabIndex={4} />
             </FormControl>
           </ModalBody>
-          <OpenStreetMapLoaderNoSSR />
+          <Box height={"300px"}>
+            <OpenStreetMapLoaderNoSSR />
+          </Box>
           <ModalFooter>
             <Button
               tabIndex={5}
@@ -74,9 +77,11 @@ export default function GetLocationModal() {
             >
               Batal
             </Button>
-            <Button variant='strongBlue' tabIndex={4}>
-              Simpan
-            </Button>
+            <VStack gap={0}>
+              <Button variant='strongBlue' tabIndex={4}>
+                Simpan
+              </Button>
+            </VStack>
           </ModalFooter>
         </ModalContent>
       </Modal>
