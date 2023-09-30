@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export enum TicketType {
+  PAID = "PAID",
+  MIN_PRICE = "MIN_PRICE",
+  FREE = "FREE",
+}
 const modalCreateEventSlice = createSlice({
   name: "modalCreateEvent",
   initialState: {
@@ -7,6 +12,7 @@ const modalCreateEventSlice = createSlice({
     isOpenDateTime: false,
     isOpenLocation: false,
     isOpenTicket: false,
+    ticketType: TicketType.PAID,
   },
   reducers: {
     openFormat: (state) => {
@@ -33,6 +39,14 @@ const modalCreateEventSlice = createSlice({
     closeTicket: (state) => {
       state.isOpenTicket = false;
     },
+    setTicketType: (state, action) => {
+      if (
+        action.payload === TicketType.PAID ||
+        action.payload === TicketType.MIN_PRICE ||
+        action.payload === TicketType.FREE
+      )
+        state.ticketType = action.payload;
+    },
   },
 });
 
@@ -45,6 +59,7 @@ export const {
   closeLocation,
   openTicket,
   closeTicket,
+  setTicketType,
 } = modalCreateEventSlice.actions;
 
 export default modalCreateEventSlice.reducer;

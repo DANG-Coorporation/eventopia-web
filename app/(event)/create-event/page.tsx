@@ -6,10 +6,12 @@ import GetLocationModal from "@/components/create_event/modal/LocationModal";
 import GetTiecketModal from "@/components/create_event/modal/TicketModal";
 import GetTimeModal from "@/components/create_event/modal/TimeModal";
 import {
+  TicketType,
   openDateTime,
   openFormat,
   openLocation,
   openTicket,
+  setTicketType,
 } from "@/redux/features/create_event/modalSlice";
 import {
   Box,
@@ -336,6 +338,7 @@ export default function CreateEvent() {
                         right={"10px"}
                         cursor={"pointer"}
                         onClick={() => {
+                          dispatch(setTicketType(TicketType.PAID));
                           dispatch(openTicket());
                         }}
                       >
@@ -397,6 +400,10 @@ export default function CreateEvent() {
                         position={"absolute"}
                         right={"10px"}
                         cursor={"pointer"}
+                        onClick={() => {
+                          dispatch(setTicketType(TicketType.MIN_PRICE));
+                          dispatch(openTicket());
+                        }}
                       >
                         <BsPlusCircle size={"35px"} />
                       </Box>
@@ -448,6 +455,10 @@ export default function CreateEvent() {
                         position={"absolute"}
                         right={"10px"}
                         cursor={"pointer"}
+                        onClick={() => {
+                          dispatch(setTicketType(TicketType.FREE));
+                          dispatch(openTicket());
+                        }}
                       >
                         <BsPlusCircle size={"35px"} />
                       </Box>
