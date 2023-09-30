@@ -1,13 +1,15 @@
 "use client";
 
 import RichTextEditor from "@/components/RichTextEditor";
-import GetFormatModal from "@/components/create_event/modal/GetFormatModal";
-import GetLocationModal from "@/components/create_event/modal/GetLocationModal";
-import GetTimeModal from "@/components/create_event/modal/GetTimeModal";
+import GetFormatModal from "@/components/create_event/modal/FormatModal";
+import GetLocationModal from "@/components/create_event/modal/LocationModal";
+import GetTiecketModal from "@/components/create_event/modal/TicketModal";
+import GetTimeModal from "@/components/create_event/modal/TimeModal";
 import {
   openDateTime,
   openFormat,
   openLocation,
+  openTicket,
 } from "@/redux/features/create_event/modalSlice";
 import {
   Box,
@@ -333,6 +335,9 @@ export default function CreateEvent() {
                         position={"absolute"}
                         right={"10px"}
                         cursor={"pointer"}
+                        onClick={() => {
+                          dispatch(openTicket());
+                        }}
                       >
                         <BsPlusCircle size={"35px"} />
                       </Box>
@@ -557,6 +562,7 @@ export default function CreateEvent() {
       <GetTimeModal />
       <GetLocationModal />
       <GetFormatModal />
+      <GetTiecketModal />
     </>
   );
 }

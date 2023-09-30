@@ -51,8 +51,6 @@ export default function GetTimeModal() {
     } else {
       setIsDisabledNext(true);
     }
-  }, [eventDate]);
-  useEffect(() => {
     if (eventDate.startDate === eventDate.endDate) {
       if (eventTime.startTime !== "") {
         setEndEventTime(hourList.filter((hour) => hour > eventTime.startTime));

@@ -6,6 +6,7 @@ const modalCreateEventSlice = createSlice({
     isOpenFormat: false,
     isOpenDateTime: false,
     isOpenLocation: false,
+    isOpenTicket: false,
   },
   reducers: {
     openFormat: (state) => {
@@ -26,6 +27,12 @@ const modalCreateEventSlice = createSlice({
     closeLocation: (state) => {
       state.isOpenLocation = false;
     },
+    openTicket: (state) => {
+      state.isOpenTicket = true;
+    },
+    closeTicket: (state) => {
+      state.isOpenTicket = false;
+    },
   },
 });
 
@@ -36,6 +43,8 @@ export const {
   closeDateTime,
   openLocation,
   closeLocation,
+  openTicket,
+  closeTicket,
 } = modalCreateEventSlice.actions;
 
 export default modalCreateEventSlice.reducer;
