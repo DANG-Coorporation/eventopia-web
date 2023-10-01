@@ -28,6 +28,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import lodash from "lodash";
 import { IFormat, ITopic } from "@/common/interface/mastedData.interface";
+import { DateTime } from "luxon";
 
 export default function EventInformation() {
   const bannerEvent = "images/event/banner-event.jpg";
@@ -54,7 +55,31 @@ export default function EventInformation() {
     }
   };
   useEffect(() => {}, [dispatch]);
-
+  const getEventTime = () => {
+    if (event.eventStartDateTime === "" || event.eventEndDateTime === "") {
+      return {
+        isDateTime: false,
+        startDate: "",
+        endDate: "",
+        startTime: "",
+        endTime: "",
+      };
+    } else {
+      const startDateObj = DateTime.fromSQL(event.eventStartDateTime);
+      const endDateObj = DateTime.fromSQL(event.eventEndDateTime);
+      const startDate = startDateObj.setLocale("id").toFormat("dd MMMM yyyy");
+      const endDate = endDateObj.setLocale("id").toFormat("dd MMMM yyyy");
+      const startTime = startDateObj.toFormat("HH:mm");
+      const endTime = endDateObj.toFormat("HH:mm");
+      return {
+        isDateTime: true,
+        startDate: startDate,
+        endDate: endDate,
+        startTime: startTime,
+        endTime: endTime,
+      };
+    }
+  };
   return (
     <>
       <Box
@@ -136,52 +161,55 @@ export default function EventInformation() {
                 <Heading size={"md"}>Event Time</Heading>
                 <BsFillPencilFill size={"15px"} />
               </HStack>
-
-              <Grid
-                templateColumns={{
-                  base: "repeat(1, 1fr)",
-                  md: "repeat(2, 1fr)",
-                }}
-                gap={1}
-                justifyContent={"space-between"}
-              >
-                <Box
-                  width={{
-                    base: "100%",
-                    md: "160px",
+              {getEventTime().isDateTime ? (
+                <Grid
+                  templateColumns={{
+                    base: "repeat(1, 1fr)",
+                    md: "repeat(2, 1fr)",
                   }}
+                  gap={1}
+                  justifyContent={"space-between"}
                 >
-                  <VStack width={"full"}>
-                    <Text fontWeight={"bold"}>Start Time</Text>
-                    <HStack>
-                      <BsCalendarRange />
-                      <Text> 5 October 2023</Text>
-                    </HStack>
-                    <HStack>
-                      <BsClock />
-                      <Text> 10:00</Text>
-                    </HStack>
-                  </VStack>
-                </Box>
-                <Box
-                  width={{
-                    base: "100%",
-                    md: "160px",
-                  }}
-                >
-                  <VStack width={"full"}>
-                    <Text fontWeight={"bold"}>End Time</Text>
-                    <HStack>
-                      <BsCalendarRange />
-                      <Text> 5 October 2023</Text>
-                    </HStack>
-                    <HStack>
-                      <BsClock />
-                      <Text> 10:00</Text>
-                    </HStack>
-                  </VStack>
-                </Box>
-              </Grid>
+                  <Box
+                    width={{
+                      base: "100%",
+                      md: "160px",
+                    }}
+                  >
+                    <VStack width={"full"}>
+                      <Text fontWeight={"bold"}>Start Time</Text>
+                      <HStack>
+                        <BsCalendarRange />
+                        <Text> {getEventTime().startDate}</Text>
+                      </HStack>
+                      <HStack>
+                        <BsClock />
+                        <Text> {getEventTime().startTime}</Text>
+                      </HStack>
+                    </VStack>
+                  </Box>
+                  <Box
+                    width={{
+                      base: "100%",
+                      md: "160px",
+                    }}
+                  >
+                    <VStack width={"full"}>
+                      <Text fontWeight={"bold"}>End Time</Text>
+                      <HStack>
+                        <BsCalendarRange />
+                        <Text> {getEventTime().endDate}</Text>
+                      </HStack>
+                      <HStack>
+                        <BsClock />
+                        <Text> {getEventTime().endTime}</Text>
+                      </HStack>
+                    </VStack>
+                  </Box>
+                </Grid>
+              ) : (
+                <Text>Tentukan Waktu Event</Text>
+              )}
             </VStack>
           </Box>
           <Box

@@ -50,7 +50,7 @@ export default function NavbarMenu() {
           const response = await dispatch(verifyUser(accessToken));
           localStorage.setItem('localUser', JSON.stringify(response.payload));
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       }
     };

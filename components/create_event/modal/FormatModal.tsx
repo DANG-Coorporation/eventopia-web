@@ -97,9 +97,6 @@ export default function GetFormatModal() {
     setIsDisabledSave(!(event.formatId && event.topicId));
   }, [isOpen]);
 
-  useEffect(() => {
-    console.log("debug-formik", formik.values);
-  }, []);
   return (
     <>
       <Modal

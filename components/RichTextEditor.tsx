@@ -8,7 +8,7 @@ export default function RichTextEditor() {
         <Editor
           apiKey='lxezcq3kep8iys6wpxrpllmsvoznj9o183sk99ul222heoyk'
           onInit={(evt, editor) =>
-            console.log("Editor is ready to use!", editor)
+            console.info("Editor is ready to use!", editor)
           }
           initialValue={"<p>Deskripsi kan eventmu</p>"}
           // onKeyUp={handleEditorChange}

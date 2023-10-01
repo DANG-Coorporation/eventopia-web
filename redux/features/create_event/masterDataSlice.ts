@@ -13,7 +13,7 @@ export const fetchFormats = createAsyncThunk(
       const response = await getFormatsEvent();
       return response.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 );
@@ -25,7 +25,7 @@ export const fetchTopics = createAsyncThunk(
       const response = await getTopicsEvent();
       return response.data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 );
