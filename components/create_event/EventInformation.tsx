@@ -1,8 +1,10 @@
+import { setEvent } from "@/redux/features/create_event/createEventSlice";
 import {
   openDateTime,
   openFormat,
   openLocation,
 } from "@/redux/features/create_event/modalSlice";
+import { AppDispatch, RootState } from "@/redux/store";
 import {
   Box,
   Button,
@@ -15,6 +17,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import React, { useEffect } from "react";
 import {
   BsCalendarRange,
   BsClock,
@@ -22,11 +25,36 @@ import {
   BsPinMapFill,
   BsTrash3Fill,
 } from "react-icons/bs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import lodash from "lodash";
+import { IFormat, ITopic } from "@/common/interface/mastedData.interface";
 
 export default function EventInformation() {
-  const dispatch = useDispatch();
   const bannerEvent = "images/event/banner-event.jpg";
+  const event = useSelector((state: RootState) => state.createEvent);
+  const dispatch = useDispatch<AppDispatch>();
+  const masterData = useSelector((state: RootState) => state.masterData);
+  const handlerEventName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.value;
+    const prevEvent = event;
+    const newEvent = { ...prevEvent, name: name };
+    dispatch(setEvent(newEvent));
+  };
+  const getFormatTopic = () => {
+    if (event.formatId === 0 || event.topicId === 0) {
+      return "Pilih Format dan Topik";
+    } else {
+      const format = lodash.find(masterData.formats, {
+        id: event.formatId,
+      }) as IFormat;
+      const topic = lodash.find(masterData.topics, {
+        id: event.topicId,
+      }) as ITopic;
+      return `${format.name} - ${topic.name}`;
+    }
+  };
+  useEffect(() => {}, [dispatch]);
+
   return (
     <>
       <Box
@@ -74,6 +102,8 @@ export default function EventInformation() {
           fontSize={"2xl"}
           borderRadius={0}
           mt={2}
+          value={event.name}
+          onChange={handlerEventName}
         />
         <HStack
           mx={4}
@@ -83,7 +113,7 @@ export default function EventInformation() {
             dispatch(openFormat());
           }}
         >
-          <Text>Format Event</Text>
+          <Text>{getFormatTopic()}</Text>
           <BsFillPencilFill />
         </HStack>
         <Divider />
