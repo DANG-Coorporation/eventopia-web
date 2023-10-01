@@ -5,20 +5,16 @@ export interface IFormat {
   updatedAt: string;
 }
 
-export interface ITopic {
-  id: number;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-}
+export interface ITopic extends IFormat {}
 
+export interface IProvince extends IFormat {}
 export interface IMasterDataState {
   statusApiFormats: string;
   formats: IFormat[];
   statusApiTopics: string;
   topics: ITopic[];
   statusApiProvinces: string;
-  provinces: any[];
+  provinces: IProvince[];
   statusApiCities: string;
   cities: any[];
 }

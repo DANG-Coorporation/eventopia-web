@@ -4,6 +4,7 @@ import loginReducer from './features/loginSlice';
 import modalCreateEventReducer from "./features/create_event/modalSlice";
 import createEventReducer from "./features/create_event/createEventSlice";
 import masterDateReducer from "./features/create_event/masterDataSlice";
+import openStreetMapReducer from "./features/open_street_map/openStreetMapSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     modalCreateEvent: modalCreateEventReducer,
     createEvent: createEventReducer,
     masterData: masterDateReducer,
+    openStreetMap: openStreetMapReducer,
   },
 });
 

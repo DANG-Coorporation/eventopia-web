@@ -80,6 +80,10 @@ export default function EventInformation() {
       };
     }
   };
+
+  const getLocation = () => {
+    return event.address ?? "Tentukan Lokasi Event";
+  };
   return (
     <>
       <Box
@@ -225,7 +229,15 @@ export default function EventInformation() {
                 <BsFillPencilFill size={"15px"} />
               </HStack>
               <HStack>
-                <BsPinMapFill /> <Text>Offline Location</Text>
+                <BsPinMapFill />{" "}
+                <Text
+                  whiteSpace='nowrap'
+                  overflow='hidden'
+                  textOverflow='ellipsis'
+                  maxWidth='200px'
+                >
+                  {getLocation()}
+                </Text>
               </HStack>
             </VStack>
           </Box>

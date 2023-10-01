@@ -15,9 +15,9 @@ import { useSelector } from "react-redux";
 export default function CreateEvent() {
   const event = useSelector((state: RootState) => state.createEvent);
 
-  useEffect(() => {
-    console.log("debug-event", event);
-  }, [event]);
+  // useEffect(() => {
+  //   console.log("debug-event", event);
+  // }, [event]);
   return (
     <>
       <VStack width={"98vw"} minWidth={"380px"} mb={"100px"}>

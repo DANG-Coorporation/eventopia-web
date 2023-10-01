@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet"; // Import the 'L' object
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 // import pinMap from "/public/images/openStreetMap/pinMap.svg";
 interface MarkerMapProps {
   lat: number;
@@ -8,10 +10,6 @@ interface MarkerMapProps {
 }
 
 export default function MarkerMap({ lat, long }: MarkerMapProps) {
-  // Static data for latitude and longitude
-  lat = -6.2; // Replace with your desired latitude
-  long = 106.816666; // Replace with your desired longitude
-
   const center = {
     lat: lat,
     lng: long,

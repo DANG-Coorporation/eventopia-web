@@ -16,3 +16,11 @@ export const getFormatsEvent = async () => {
 export const getTopicsEvent = async () => {
   return await eventopiaApi.get("/master-data/topics", {});
 };
+
+export const getProvinces = async () => {
+  return await eventopiaApi.get("/master-data/provinces", {});
+};
+
+export const getCities = async (provinceId: number) => {
+  return await eventopiaApi.get(`/master-data/cities/${provinceId}`, {});
+};
