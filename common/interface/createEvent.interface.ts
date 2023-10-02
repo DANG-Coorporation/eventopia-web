@@ -31,5 +31,7 @@ export interface IEvent {
     type: TicketType.PAID | TicketType.MIN_PRICE | TicketType.FREE;
     price: number;
     quantity: number;
+    startDateTime: string;
+    endDateTime: string;
   }[];
 }

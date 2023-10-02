@@ -21,11 +21,30 @@ import {
 } from "@chakra-ui/react";
 import { BsPlusCircle, BsTrash3Fill } from "react-icons/bs";
 import RichTextEditor from "../RichTextEditor";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TicketDisplayCreate from "./tickets/TicketDisplayCreate";
 import AddTicket from "./tickets/AddTicket";
+import { RootState } from "@/redux/store";
 export default function EventDescriptions() {
+  const event = useSelector((state: RootState) => state.createEvent);
   const dispatch = useDispatch();
+
+  const getTicketList = () => {
+    return event.eventTickets.map((ticket, index) => {
+      return (
+        <TicketDisplayCreate
+          key={index}
+          positionIndex={index}
+          title={ticket.name}
+          description={ticket.description}
+          price={ticket.price}
+          ticketType={ticket.type}
+          ticketStartDateTime={ticket.startDateTime}
+          ticketEndDateTime={ticket.endDateTime}
+        />
+      );
+    });
+  };
 
   return (
     <>
@@ -51,97 +70,7 @@ export default function EventDescriptions() {
           </TabList>
           <TabPanels>
             <TabPanel>
-              {/* <Box
-                border='2px'
-                p={2}
-                minH={"135px"}
-                position='relative' // Set position to relative for proper positioning of ::before pseudo-element
-                paddingX={"20px"}
-                backgroundColor={"#81D4FA"}
-              >
-                <Box
-                  position='absolute'
-                  width='30px'
-                  height='30px'
-                  backgroundColor='white'
-                  bottom='20px' // Vertically center the circle
-                  left='-16.9px' // Move the circle to the left
-                  border={"2px"}
-                  borderColor='black'
-                  borderRadius='50%'
-                  borderTop={"2px solid white"}
-                  borderRight={"2px solid white"}
-                  transform='rotate(225deg)' // Adjust for vertical centering
-                ></Box>
-                <Box
-                  position='absolute'
-                  width='30px'
-                  height='30px'
-                  backgroundColor='white'
-                  bottom='20px' // Vertically center the circle
-                  right='-16.9px' // Move the circle to the left
-                  border={"2px"}
-                  borderColor='black'
-                  borderRadius='50%'
-                  borderBottom={"2px solid white"}
-                  borderLeft={"2px solid white"}
-                  transform='rotate(225deg)' // Adjust for vertical centering
-                ></Box>
-                <VStack justifyContent={"space-between"}>
-                  <VStack minH={"90px"} alignItems={"start"} width={"100%"}>
-                    <Text fontSize={"lg"} fontWeight={"bold"}>
-                      Title
-                    </Text>
-                    <Text fontSize={"sm"} textAlign={"left"}>
-                      Deskripsi Deskripsi Deskripsi Deskripsi Deskripsi
-                      Deskripsi Deskripsi Deskripsi Deskripsi Deskripsi
-                      Deskripsi Deskripsi Deskripsi Deskripsi Deskripsi
-                      Deskripsi Deskripsi Deskripsi Deskripsi Deskripsi
-                      Deskripsi Deskripsi Deskripsi Deskripsi
-                    </Text>
-                    <Spacer />
-                    <Text fontSize={"sm"}>Berlaku hingga</Text>
-                  </VStack>
-                  <Box
-                    marginBottom={"-8px"}
-                    width='100%'
-                    borderTop={"2px dashed black"}
-                    bottom={"0px"}
-                    height={"35px"}
-                  >
-                    <HStack justifyContent={"space-between"} padding={"1"}>
-                      <Text fontWeight={"bold"}>Rp. 300.000</Text>
-                      <Box cursor={"pointer"}>
-                        <BsTrash3Fill />
-                      </Box>
-                    </HStack>
-                  </Box>
-                </VStack>
-              </Box> */}
-              <TicketDisplayCreate
-                title='PERMIUM'
-                description='Tiket ini berlaku untuk 1 orang'
-                price={300000}
-                ticketType={TicketType.PAID}
-                ticketStartDateTime='2023-10-01 00:00:00'
-                ticketEndDateTime='2023-10-01 12:00:00'
-              />
-              <TicketDisplayCreate
-                title='PERTALITE'
-                description='Tiket ini berlaku untuk 1 orang'
-                price={200000}
-                ticketType={TicketType.PAID}
-                ticketStartDateTime='2023-10-01 00:00:00'
-                ticketEndDateTime='2023-10-01 12:00:00'
-              />
-              <TicketDisplayCreate
-                title='GIVE AWAY'
-                description='Tiket ini berlaku untuk 1 orang'
-                price={0}
-                ticketType={TicketType.FREE}
-                ticketStartDateTime='2023-10-01 00:00:00'
-                ticketEndDateTime='2023-10-01 12:00:00'
-              />
+              {getTicketList()}
               <Grid
                 templateColumns={{
                   base: "repeat(1, 1fr)",

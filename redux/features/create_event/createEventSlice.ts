@@ -39,8 +39,19 @@ const createEventSlice = createSlice({
     setEvent(state, action) {
       return action.payload;
     },
+    addTicketEvent(state, action) {
+      state.eventTickets.push(action.payload);
+    },
+    removeTicketEventByIndex(state, action) {
+      state.eventTickets.splice(action.payload, 1);
+    },
   },
 });
 
-export const { setNameCreateEvent, setEvent } = createEventSlice.actions;
+export const {
+  setNameCreateEvent,
+  setEvent,
+  addTicketEvent,
+  removeTicketEventByIndex,
+} = createEventSlice.actions;
 export default createEventSlice.reducer;

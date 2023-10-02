@@ -1,7 +1,10 @@
+import { removeTicketEventByIndex } from "@/redux/features/create_event/createEventSlice";
 import { TicketType } from "@/redux/features/create_event/modalSlice";
+import { AppDispatch } from "@/redux/store";
 import { Box, HStack, Spacer, Text, VStack } from "@chakra-ui/react";
 import { DateTime } from "luxon";
 import { BsTrash3Fill } from "react-icons/bs";
+import { useDispatch } from "react-redux";
 interface ITicketDisplayCreate {
   ticketType: string;
   title: string;
@@ -9,9 +12,11 @@ interface ITicketDisplayCreate {
   price: number;
   ticketStartDateTime: string;
   ticketEndDateTime: string;
+  positionIndex: number;
 }
 
 export default function TicketDisplayCreate(props: ITicketDisplayCreate) {
+  const dispatch = useDispatch<AppDispatch>();
   const convertPrice = () => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
@@ -23,6 +28,10 @@ export default function TicketDisplayCreate(props: ITicketDisplayCreate) {
     return DateTime.fromSQL(props.ticketStartDateTime)
       .setLocale("id")
       .toFormat("dd MMMM yyyy");
+  };
+
+  const handleDeleteTicket = () => {
+    dispatch(removeTicketEventByIndex(props.positionIndex));
   };
   return (
     <>
@@ -87,7 +96,7 @@ export default function TicketDisplayCreate(props: ITicketDisplayCreate) {
                   ? "Gratis"
                   : convertPrice()}
               </Text>
-              <Box cursor={"pointer"}>
+              <Box cursor={"pointer"} onClick={handleDeleteTicket}>
                 <BsTrash3Fill />
               </Box>
             </HStack>
