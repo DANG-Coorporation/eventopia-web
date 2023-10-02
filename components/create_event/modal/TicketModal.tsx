@@ -51,7 +51,6 @@ export default function GetTiecketModal() {
   const ticketType = useSelector(
     (state: RootState) => state.modalCreateEvent.ticketType
   );
-  // console.log("debug-ticket", ticketType);
   const dispatch = useDispatch();
   const [eventDate, setEventDate] = useState({
     startDate: "",
@@ -239,10 +238,6 @@ export default function GetTiecketModal() {
       formik.setFieldValue("dateEnd", eventDate.startDate);
     }
   }, [eventDate, eventTime]);
-
-  useEffect(() => {
-    console.log("debug-formik", formik.errors, formik.values);
-  }, [formik.errors, formik.values]);
 
   const handleChangeInput = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
