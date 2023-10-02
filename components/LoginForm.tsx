@@ -30,7 +30,7 @@ import { loginUser } from '../redux/features/loginSlice';
 import { useRouter } from 'next/navigation';
 import { AppDispatch } from '@/redux/store';
 import { ILogin } from '@/types';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
 import { auth } from '@/utils/firebase';
 
 export default function LoginForm() {
@@ -44,10 +44,8 @@ export default function LoginForm() {
   const googleProvider = new GoogleAuthProvider();
   const handleGoogleLogin = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
-      setTimeout(() => {
-        router.push('/');
-      }, 1000);
+      await signInWithRedirect(auth, googleProvider);
+      router.push('/');
     } catch (err) {
       console.log(err);
     }
