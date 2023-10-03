@@ -5,6 +5,7 @@ import modalCreateEventReducer from "./features/create_event/modalSlice";
 import createEventReducer from "./features/create_event/createEventSlice";
 import masterDateReducer from "./features/create_event/masterDataSlice";
 import openStreetMapReducer from "./features/open_street_map/openStreetMapSlice";
+import postCoverReducer from "./features/create_event/uploadCoverSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     createEvent: createEventReducer,
     masterData: masterDateReducer,
     openStreetMap: openStreetMapReducer,
+    coverCreateEvent: postCoverReducer,
   },
 });
 

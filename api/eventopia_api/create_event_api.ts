@@ -24,3 +24,23 @@ export const getProvinces = async () => {
 export const getCities = async (provinceId: number) => {
   return await eventopiaApi.get(`/master-data/cities/${provinceId}`, {});
 };
+
+export const uploadDocument = async (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const headers = {
+    Authorization: "Bearer " + localStorage.getItem("accessToken"),
+    "Content-Type": "multipart/form-data",
+  };
+
+  try {
+    const response = await eventopiaApi.post("/document/uploads", formData, {
+      headers,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error uploading document:", error);
+    throw error;
+  }
+};

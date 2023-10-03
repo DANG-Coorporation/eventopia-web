@@ -1,9 +1,13 @@
+import { apiStatus } from "@/common/constants/api_status";
+import { IEvent } from "@/common/interface/createEvent.interface";
+import { IFormat, ITopic } from "@/common/interface/mastedData.interface";
 import { setEvent } from "@/redux/features/create_event/createEventSlice";
 import {
   openDateTime,
   openFormat,
   openLocation,
 } from "@/redux/features/create_event/modalSlice";
+import { postCoverImage } from "@/redux/features/create_event/uploadCoverSlice";
 import { AppDispatch, RootState } from "@/redux/store";
 import {
   Box,
@@ -15,26 +19,32 @@ import {
   Image,
   Input,
   Text,
+  Tooltip,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import lodash from "lodash";
+import { DateTime } from "luxon";
+import { redirect } from "next/navigation";
+import React, { useEffect, useRef } from "react";
 import {
   BsCalendarRange,
   BsClock,
   BsFillPencilFill,
   BsPinMapFill,
+  BsPlusSquareDotted,
   BsTrash3Fill,
 } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import lodash from "lodash";
-import { IFormat, ITopic } from "@/common/interface/mastedData.interface";
-import { DateTime } from "luxon";
 
 export default function EventInformation() {
   const bannerEvent = "images/event/banner-event.jpg";
   const event = useSelector((state: RootState) => state.createEvent);
+  const coverState = useSelector((state: RootState) => state.coverCreateEvent);
+  const toast = useToast();
   const dispatch = useDispatch<AppDispatch>();
   const masterData = useSelector((state: RootState) => state.masterData);
+  const uploadRef = useRef<HTMLInputElement>(null);
   const handlerEventName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value;
     const prevEvent = event;
@@ -54,7 +64,7 @@ export default function EventInformation() {
       return `${format.name} - ${topic.name}`;
     }
   };
-  useEffect(() => {}, [dispatch]);
+
   const getEventTime = () => {
     if (event.eventStartDateTime === "" || event.eventEndDateTime === "") {
       return {
@@ -81,10 +91,53 @@ export default function EventInformation() {
     }
   };
 
+  const [cover, setCover] = React.useState<File | null>(null);
+
+  const isLoggedIn = () => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      return true;
+    }
+    return false;
+    // return true;
+  };
+
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setCover(file);
+      dispatch(postCoverImage(file))
+        .unwrap()
+        .then((res) => {
+          const prevEvent = event;
+          const newEvent: IEvent = { ...prevEvent, coverUrl: res.fileUrl };
+          dispatch(setEvent(newEvent));
+        })
+        .catch((err) => {
+          toast({
+            title: "Error",
+            description: "File tidak dapat diupload",
+            status: "error",
+            duration: 2000,
+            position: "top",
+            isClosable: true,
+          });
+        });
+    }
+  };
+
+  const handleDeleteCover = () => {
+    setCover(null);
+    const prevEvent = event;
+    const newEvent: IEvent = { ...prevEvent, coverUrl: "" };
+    dispatch(setEvent(newEvent));
+  };
+
   const getLocation = () => {
     return event.address ?? "Tentukan Lokasi Event";
   };
-  return (
+
+  return isLoggedIn() ? (
     <>
       <Box
         width={{ base: "94vw", lg: "800px" }}
@@ -93,37 +146,87 @@ export default function EventInformation() {
         p={2}
         position={"relative"}
       >
-        <Image width={"100%"} aspectRatio={780 / 390} src={bannerEvent} />
-        <Button
-          position={"absolute"}
-          mt={"-40px"}
-          right={"0px"}
-          mr={"15px"}
-          colorScheme={"red"}
-          size={"sm"}
-          variant={"solid"}
-          border={"2px"}
-          borderColor={"black"}
-          borderRadius={0}
-          padding={0}
-        >
-          <BsTrash3Fill size={"20px"} />
-        </Button>
-        <Button
-          position={"absolute"}
-          mt={"-40px"}
-          right={"0px"}
-          mr={"55px"}
-          colorScheme={"green"}
-          size={"sm"}
-          variant={"solid"}
-          border={"2px"}
-          borderColor={"black"}
-          borderRadius={0}
-          padding={0}
-        >
-          <BsFillPencilFill size={"20px"} />
-        </Button>
+        <Box position={"relative"} width={"100%"} aspectRatio={780 / 390}>
+          <Input
+            name='upload'
+            type='file'
+            ref={uploadRef}
+            accept='.jpg,.jpeg,.png'
+            display={"none"}
+            onClick={(e) => {
+              (e.target as HTMLInputElement).value = "";
+            }}
+            onChange={handleUpload}
+          />
+          <Image
+            width={"100%"}
+            aspectRatio={780 / 390}
+            src={event.coverUrl ? event.coverUrl : bannerEvent}
+          />
+          <Tooltip
+            visibility={cover ? "hidden" : "visible"}
+            label='Add Cover'
+            aria-label='A tooltip'
+          >
+            <Button
+              // isLoading
+              isLoading={coverState.apiStatus === apiStatus.LOADING}
+              visibility={cover ? "hidden" : "visible"}
+              position={"absolute"}
+              size={"lg"}
+              padding={0}
+              bottom={"50%"}
+              right={"50%"}
+              transform={"translate(50%,50%)"}
+              onClick={() => {
+                uploadRef.current?.click();
+              }}
+            >
+              <BsPlusSquareDotted size={"40px"} />
+            </Button>
+          </Tooltip>
+          <Tooltip label='Delete Cover' aria-label='A tooltip'>
+            <Button
+              visibility={cover ? "visible" : "hidden"}
+              position={"absolute"}
+              mt={"-40px"}
+              right={"0px"}
+              mr={"15px"}
+              colorScheme={"red"}
+              size={"sm"}
+              variant={"solid"}
+              border={"2px"}
+              borderColor={"black"}
+              borderRadius={0}
+              padding={0}
+              onClick={handleDeleteCover}
+            >
+              <BsTrash3Fill size={"20px"} />
+            </Button>
+          </Tooltip>
+          <Tooltip label='Edit Cover' aria-label='A tooltip'>
+            <Button
+              visibility={cover ? "visible" : "hidden"}
+              position={"absolute"}
+              mt={"-40px"}
+              right={"0px"}
+              mr={"55px"}
+              colorScheme={"green"}
+              size={"sm"}
+              variant={"solid"}
+              border={"2px"}
+              borderColor={"black"}
+              borderRadius={0}
+              padding={0}
+              onClick={() => {
+                uploadRef.current?.click();
+              }}
+            >
+              <BsFillPencilFill size={"20px"} />
+            </Button>
+          </Tooltip>
+        </Box>
+
         <Input
           variant={"noBorder"}
           name='eventName'
@@ -244,5 +347,7 @@ export default function EventInformation() {
         </Grid>
       </Box>
     </>
+  ) : (
+    redirect("/login")
   );
 }
