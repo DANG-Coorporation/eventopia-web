@@ -9,6 +9,7 @@ import GetTiecketModal from "@/components/create_event/modal/TicketModal";
 import GetTimeModal from "@/components/create_event/modal/TimeModal";
 import { setEvent } from "@/redux/features/create_event/createEventSlice";
 import { AppDispatch, RootState } from "@/redux/store";
+import { getLocalStorage } from "@/utils/localStorage";
 import { Heading, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +22,7 @@ export default function CreateEvent() {
   //   console.log("debug-event", event);
   // }, [event]);
   useEffect(() => {
-    const draft = localStorage.getItem("eventDraft");
+    const draft = getLocalStorage("eventDraft");
     if (draft) {
       const eventDraft = JSON.parse(draft);
 

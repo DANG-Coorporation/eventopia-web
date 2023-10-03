@@ -1,5 +1,6 @@
 import { postEvent } from "@/redux/features/create_event/uploadCoverSlice";
 import { AppDispatch, RootState } from "@/redux/store";
+import { removeLocalStorage } from "@/utils/localStorage";
 import {
   Box,
   Button,
@@ -117,7 +118,7 @@ export default function FooterCreateEvent() {
             isClosable: true,
             position: "top",
           });
-          localStorage.removeItem("eventDraft");
+          removeLocalStorage("eventDraft");
           window.location.href = `/event/${res.uniqueId}`;
         })
         .catch((err) => {
