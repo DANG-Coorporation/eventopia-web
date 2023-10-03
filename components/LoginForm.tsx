@@ -49,7 +49,7 @@ export default function LoginForm() {
         router.push('/');
       }, 1000);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
