@@ -30,7 +30,7 @@ import { registerUser } from '../redux/features/registerSlice';
 import { useRouter } from 'next/navigation';
 import { AppDispatch } from '@/redux/store';
 import { IRegister } from '@/types';
-import { GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '@/utils/firebase';
 
 export default function RegisterForm() {
@@ -44,7 +44,7 @@ export default function RegisterForm() {
   const googleProvider = new GoogleAuthProvider();
   const handleGoogleRegister = async () => {
     try {
-      await signInWithRedirect(auth, googleProvider);
+      await signInWithPopup(auth, googleProvider);
       router.push('/');
     } catch (err) {
       console.log(err);
