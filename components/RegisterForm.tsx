@@ -45,9 +45,7 @@ export default function RegisterForm() {
   const handleGoogleRegister = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      setTimeout(() => {
-        router.push('/');
-      }, 1000);
+      router.push('/');
     } catch (err) {
       console.error(err);
     }

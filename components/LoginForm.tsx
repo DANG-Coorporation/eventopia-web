@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Stack,
   Heading,
@@ -19,19 +19,19 @@ import {
   InputRightElement,
   Icon,
   useToast,
-} from '@chakra-ui/react';
-import NextLink from 'next/link';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { FcGoogle } from 'react-icons/fc';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { loginUser } from '../redux/features/loginSlice';
-import { useRouter } from 'next/navigation';
-import { AppDispatch } from '@/redux/store';
-import { ILogin } from '@/types';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '@/utils/firebase';
+} from "@chakra-ui/react";
+import NextLink from "next/link";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { FcGoogle } from "react-icons/fc";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../redux/features/loginSlice";
+import { useRouter } from "next/navigation";
+import { AppDispatch } from "@/redux/store";
+import { ILogin } from "@/types";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "@/utils/firebase";
 import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
 
 export default function LoginForm() {

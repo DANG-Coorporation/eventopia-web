@@ -12,7 +12,11 @@ export default function Home() {
   const isSmallScreen = useBreakpointValue({
     base: true,
     md: false,
+  },
+  {
+    fallback: 'md'
   });
+  
   return (
     <Stack>
       {isSmallScreen ? <NavbarMobile /> : <Navbar />}
