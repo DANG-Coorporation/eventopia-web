@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Stack,
   Heading,
@@ -19,19 +19,20 @@ import {
   InputRightElement,
   Icon,
   useToast,
-} from '@chakra-ui/react';
-import NextLink from 'next/link';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { FcGoogle } from 'react-icons/fc';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { loginUser } from '../redux/features/loginSlice';
-import { useRouter } from 'next/navigation';
-import { AppDispatch } from '@/redux/store';
-import { ILogin } from '@/types';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '@/utils/firebase';
+} from "@chakra-ui/react";
+import NextLink from "next/link";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { FcGoogle } from "react-icons/fc";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../redux/features/loginSlice";
+import { useRouter } from "next/navigation";
+import { AppDispatch } from "@/redux/store";
+import { ILogin } from "@/types";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "@/utils/firebase";
+import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
 
 export default function LoginForm() {
   const dispatch = useDispatch<AppDispatch>();
@@ -45,17 +46,19 @@ export default function LoginForm() {
   const handleGoogleLogin = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      router.push('/');
+      setTimeout(() => {
+        router.push("/");
+      }, 1000);
     } catch (err) {
       console.error(err);
     }
   };
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Email is required'),
+    email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string()
-      .min(8, 'Password must be at least 8 characters')
-      .required('Password is required'),
+      .min(8, "Password must be at least 8 characters")
+      .required("Password is required"),
   });
 
   const handleForm = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,9 +67,9 @@ export default function LoginForm() {
   };
 
   useEffect(() => {
-    const storedAccessToken = localStorage.getItem('accessToken');
+    const storedAccessToken = getLocalStorage("accessToken");
     if (storedAccessToken) {
-      router.push('/');
+      router.push("/");
     }
   }, []);
 
@@ -77,17 +80,17 @@ export default function LoginForm() {
         .unwrap()
         .then((res) => {
           const accessToken = res.accessToken;
-          localStorage.setItem('accessToken', accessToken);
-          router.push('/');
+          setLocalStorage("accessToken", accessToken);
+          router.push("/");
         })
         .catch(() => {
           toast({
-            title: 'Error',
-            description: 'Invalid email or password.',
-            status: 'error',
+            title: "Error",
+            description: "Invalid email or password.",
+            status: "error",
             duration: 3000,
             isClosable: true,
-            position: 'top-right',
+            position: "top-right",
           });
           setLoadingState(false);
         });
@@ -96,15 +99,15 @@ export default function LoginForm() {
 
   const formik = useFormik<ILogin>({
     initialValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
     validationSchema: LoginSchema,
     onSubmit: handleSubmit,
   });
 
   return (
-    <Stack w={{ base: '340px', md: '360px' }}>
+    <Stack w={{ base: "340px", md: "360px" }}>
       <Heading mt='6'>Welcome Back</Heading>
       <Text mb='6'>Login to your account to continue using Eventopia.</Text>
       <Button
@@ -113,7 +116,7 @@ export default function LoginForm() {
         borderWidth='2px'
         borderColor='gray.800'
         borderRadius='sm'
-        _hover={{ shadow: 'sm', bg: 'blue.200' }}
+        _hover={{ shadow: "sm", bg: "blue.200" }}
         onClick={handleGoogleLogin}
         size='lg'
         fontSize='md'
@@ -148,9 +151,9 @@ export default function LoginForm() {
             borderColor='gray.800'
             borderWidth='2px'
             focusBorderColor='gray.800'
-            _invalid={{ borderWidth: '2px', borderColor: 'red.500' }}
-            _focus={{ borderWidth: '1px' }}
-            _hover={{ borderColor: 'none' }}
+            _invalid={{ borderWidth: "2px", borderColor: "red.500" }}
+            _focus={{ borderWidth: "1px" }}
+            _hover={{ borderColor: "none" }}
             size='lg'
             fontSize='sm'
           />
@@ -164,7 +167,7 @@ export default function LoginForm() {
         >
           <InputGroup size='lg'>
             <Input
-              type={show ? 'text' : 'password'}
+              type={show ? "text" : "password"}
               placeholder=''
               borderRadius='sm'
               name='password'
@@ -172,9 +175,9 @@ export default function LoginForm() {
               borderColor='gray.800'
               borderWidth='2px'
               focusBorderColor='gray.800'
-              _invalid={{ borderWidth: '2px', borderColor: 'red.500' }}
-              _focus={{ borderWidth: '1px' }}
-              _hover={{ borderColor: 'none' }}
+              _invalid={{ borderWidth: "2px", borderColor: "red.500" }}
+              _focus={{ borderWidth: "1px" }}
+              _hover={{ borderColor: "none" }}
               fontSize='sm'
             />
             <FormLabel>Password</FormLabel>
@@ -183,10 +186,10 @@ export default function LoginForm() {
                 bg='white'
                 h='1.75rem'
                 size='sm'
-                aria-label={show ? 'Hide password' : 'Show password'}
+                aria-label={show ? "Hide password" : "Show password"}
                 icon={show ? <ViewOffIcon /> : <ViewIcon />}
                 onClick={showPassword}
-                _hover={show ? { bg: 'yellow.200' } : { bg: 'red.200' }}
+                _hover={show ? { bg: "yellow.200" } : { bg: "red.200" }}
               />
             </InputRightElement>
           </InputGroup>
@@ -204,7 +207,7 @@ export default function LoginForm() {
           mb='4'
           size='lg'
           fontSize='md'
-          _hover={{ shadow: 'sm', bg: 'yellow.300' }}
+          _hover={{ shadow: "sm", bg: "yellow.300" }}
         >
           Login
         </Button>
@@ -217,7 +220,7 @@ export default function LoginForm() {
           color='green.500'
           textDecoration='underline'
           ml='2'
-          _hover={{ color: 'green.400' }}
+          _hover={{ color: "green.400" }}
         >
           Register
         </Link>

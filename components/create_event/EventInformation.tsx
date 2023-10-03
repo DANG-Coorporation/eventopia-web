@@ -9,6 +9,7 @@ import {
 } from "@/redux/features/create_event/modalSlice";
 import { postCoverImage } from "@/redux/features/create_event/uploadCoverSlice";
 import { AppDispatch, RootState } from "@/redux/store";
+import { getLocalStorage } from "@/utils/localStorage";
 import {
   Box,
   Button,
@@ -95,7 +96,7 @@ export default function EventInformation() {
   };
 
   const isLoggedIn = () => {
-    const accessToken = localStorage.getItem("accessToken");
+    const accessToken = getLocalStorage("accessToken");
     if (accessToken) {
       return true;
     }

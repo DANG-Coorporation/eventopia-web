@@ -1,10 +1,11 @@
 import { IEvent } from "@/common/interface/createEvent.interface";
 import { eventopiaApi } from "./eventopia";
+import { getLocalStorage } from "@/utils/localStorage";
 
 export const createEvent = async (event: IEvent) => {
   return await eventopiaApi.post("/event", event, {
     headers: {
-      Authorization: "Bearer " + localStorage.getItem("accessToken"),
+      Authorization: "Bearer " + getLocalStorage("accessToken"),
     },
   });
 };
@@ -30,7 +31,7 @@ export const uploadDocument = async (file: File) => {
   formData.append("file", file);
 
   const headers = {
-    Authorization: "Bearer " + localStorage.getItem("accessToken"),
+    Authorization: "Bearer " + getLocalStorage("accessToken"),
     "Content-Type": "multipart/form-data",
   };
 
@@ -46,7 +47,7 @@ export const uploadDocument = async (file: File) => {
 };
 
 export const postCreateEvent = async (event: IEvent) => {
-  const token = localStorage.getItem("accessToken");
+  const token = getLocalStorage("accessToken");
   const headers = {
     Authorization: "Bearer " + token,
   };
