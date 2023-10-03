@@ -55,12 +55,17 @@ export default function EventInformation() {
     if (event.formatId === 0 || event.topicId === 0) {
       return "Pilih Format dan Topik";
     } else {
+      if (masterData.formats.length === 0 || masterData.topics.length === 0) {
+        return "Pilih Format dan Topik";
+      }
       const format = lodash.find(masterData.formats, {
         id: event.formatId,
       }) as IFormat;
       const topic = lodash.find(masterData.topics, {
         id: event.topicId,
       }) as ITopic;
+      console.log(masterData.topics);
+      console.log(topic);
       return `${format.name} - ${topic.name}`;
     }
   };
@@ -91,8 +96,6 @@ export default function EventInformation() {
     }
   };
 
-  const [cover, setCover] = React.useState<File | null>(null);
-
   const isLoggedIn = () => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
@@ -105,7 +108,6 @@ export default function EventInformation() {
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setCover(file);
       dispatch(postCoverImage(file))
         .unwrap()
         .then((res) => {
@@ -127,7 +129,6 @@ export default function EventInformation() {
   };
 
   const handleDeleteCover = () => {
-    setCover(null);
     const prevEvent = event;
     const newEvent: IEvent = { ...prevEvent, coverUrl: "" };
     dispatch(setEvent(newEvent));
@@ -164,14 +165,14 @@ export default function EventInformation() {
             src={event.coverUrl ? event.coverUrl : bannerEvent}
           />
           <Tooltip
-            visibility={cover ? "hidden" : "visible"}
+            visibility={event.coverUrl ? "hidden" : "visible"}
             label='Add Cover'
             aria-label='A tooltip'
           >
             <Button
               // isLoading
               isLoading={coverState.apiStatus === apiStatus.LOADING}
-              visibility={cover ? "hidden" : "visible"}
+              visibility={event.coverUrl ? "hidden" : "visible"}
               position={"absolute"}
               size={"lg"}
               padding={0}
@@ -187,7 +188,7 @@ export default function EventInformation() {
           </Tooltip>
           <Tooltip label='Delete Cover' aria-label='A tooltip'>
             <Button
-              visibility={cover ? "visible" : "hidden"}
+              visibility={event.coverUrl ? "visible" : "hidden"}
               position={"absolute"}
               mt={"-40px"}
               right={"0px"}
@@ -206,7 +207,7 @@ export default function EventInformation() {
           </Tooltip>
           <Tooltip label='Edit Cover' aria-label='A tooltip'>
             <Button
-              visibility={cover ? "visible" : "hidden"}
+              visibility={event.coverUrl ? "visible" : "hidden"}
               position={"absolute"}
               mt={"-40px"}
               right={"0px"}

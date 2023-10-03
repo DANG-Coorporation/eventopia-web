@@ -60,6 +60,20 @@ export default function EventDescriptions() {
     dispatch(setEvent(newEvent));
   };
 
+  const handleChangeCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    const prevEvent = event;
+    const newEvent: IEvent = { ...prevEvent, [name]: checked };
+    dispatch(setEvent(newEvent));
+  };
+
+  const handleTicketQuantity = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    const prevEvent = event;
+    const newEvent: IEvent = { ...prevEvent, [name]: value };
+    dispatch(setEvent(newEvent));
+  };
+
   return (
     <>
       <Box
@@ -140,9 +154,18 @@ export default function EventDescriptions() {
                     <Checkbox defaultChecked isDisabled>
                       Nomor Handphone
                     </Checkbox>
-                    <Checkbox>Nomor KTP </Checkbox>
-                    <Checkbox>Tanggal Lahir</Checkbox>
-                    <Checkbox>Jenis Kelamin</Checkbox>
+                    <Checkbox
+                      name='isIdentityNumber'
+                      onChange={handleChangeCheckbox}
+                    >
+                      Nomor KTP{" "}
+                    </Checkbox>
+                    <Checkbox name='isDob' onChange={handleChangeCheckbox}>
+                      Tanggal Lahir
+                    </Checkbox>
+                    <Checkbox name='isGender' onChange={handleChangeCheckbox}>
+                      Jenis Kelamin
+                    </Checkbox>
                   </VStack>
                 </Box>
                 <Box width={"100%"} h={"100px"} my={3}>
@@ -162,9 +185,11 @@ export default function EventDescriptions() {
                       </VStack>
                       <Spacer />
                       <Select
+                        name='maxPerbuy'
                         placeholder='Select option'
                         width={"120px"}
                         defaultValue={"3"}
+                        onChange={handleTicketQuantity}
                       >
                         <option value='1'> 1 Tiket</option>
                         <option value='2'> 2 Tiket</option>
@@ -180,9 +205,15 @@ export default function EventDescriptions() {
             <TabPanel>
               <VStack>
                 <Text>Deskripsi Event</Text>
-                <RichTextEditor onChange={handlerEventDescription} />
+                <RichTextEditor
+                  onChange={handlerEventDescription}
+                  initialValue={event.description || ""}
+                />
                 <Text>Syarat dan ketentuan</Text>
-                <RichTextEditor onChange={handlerEventTerms} />
+                <RichTextEditor
+                  onChange={handlerEventTerms}
+                  initialValue={event.termAndCondition || ""}
+                />
               </VStack>
             </TabPanel>
           </TabPanels>

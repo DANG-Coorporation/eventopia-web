@@ -237,6 +237,10 @@ export default function GetTiecketModal() {
       });
       formik.setFieldValue("dateEnd", eventDate.startDate);
     }
+
+    if (eventDate.startDate < eventDate.endDate) {
+      setEndEventTime(hourList);
+    }
   }, [eventDate, eventTime]);
 
   const handleChangeInput = (

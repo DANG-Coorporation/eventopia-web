@@ -44,3 +44,20 @@ export const uploadDocument = async (file: File) => {
     throw error;
   }
 };
+
+export const postCreateEvent = async (event: IEvent) => {
+  const token = localStorage.getItem("accessToken");
+  const headers = {
+    Authorization: "Bearer " + token,
+  };
+
+  try {
+    const response = await eventopiaApi.post("/event", event, {
+      headers,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating event:", error);
+    throw error;
+  }
+};

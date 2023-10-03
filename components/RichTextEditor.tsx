@@ -3,6 +3,7 @@ import { Editor } from "@tinymce/tinymce-react";
 
 interface IRichTextEditor {
   onChange: (content: string) => void;
+  initialValue: string;
 }
 
 export default function RichTextEditor(props: IRichTextEditor) {
@@ -11,11 +12,11 @@ export default function RichTextEditor(props: IRichTextEditor) {
       <Box w='100%'>
         <Editor
           apiKey='lxezcq3kep8iys6wpxrpllmsvoznj9o183sk99ul222heoyk'
-          onInit={(evt, editor) => {
+          onInit={(_, editor) => {
             console.info("Editor is ready to use!", editor);
           }}
-          initialValue={"<p>Deskripsi kan eventmu</p>"}
-          onKeyUp={(content, editor) => {
+          initialValue={props.initialValue}
+          onKeyUp={(_, editor) => {
             props.onChange(editor.getContent());
           }}
           init={{

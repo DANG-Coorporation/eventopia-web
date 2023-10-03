@@ -203,13 +203,13 @@ export default function GetLocationModal() {
 
             <ModalBody>
               <FormControl my={2}>
-                <FormLabel>Nama Alamat</FormLabel>
+                {/* <FormLabel>Nama Alamat</FormLabel>
                 <Input
                   placeholder='Nama Alamat'
                   type='text'
                   tabIndex={1}
                   onChange={handleChangeInput}
-                />
+                /> */}
 
                 <FormLabel>Provinsi</FormLabel>
                 <Select

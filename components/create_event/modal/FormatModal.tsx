@@ -141,13 +141,13 @@ export default function GetFormatModal() {
                     </option>
                   ))}
                 </Select>
-                <FormLabel>Tags</FormLabel>
+                {/* <FormLabel>Tags</FormLabel>
                 <InputGroup>
                   <InputRightElement cursor={"pointer"}>
                     <BsPlusLg />
                   </InputRightElement>
                   <Input placeholder='Tags' type='text' tabIndex={3} />
-                </InputGroup>
+                </InputGroup> */}
               </FormControl>
             </ModalBody>
 

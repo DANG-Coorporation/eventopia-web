@@ -79,8 +79,8 @@ export default function GetTimeModal() {
     const prevEvent = event;
     const newEvent: IEvent = {
       ...prevEvent,
-      eventStartDateTime: `${eventDate.startDate} ${eventTime.startTime}:00`,
-      eventEndDateTime: `${eventDate.endDate} ${eventTime.endTime}:00`,
+      eventStartDateTime: `${eventDate.startDate} ${eventTime.startTime}`,
+      eventEndDateTime: `${eventDate.endDate} ${eventTime.endTime}`,
     };
 
     dispatch(setEvent(newEvent));
