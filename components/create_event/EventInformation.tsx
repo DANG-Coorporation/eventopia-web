@@ -64,8 +64,6 @@ export default function EventInformation() {
       const topic = lodash.find(masterData.topics, {
         id: event.topicId,
       }) as ITopic;
-      console.log(masterData.topics);
-      console.log(topic);
       return `${format.name} - ${topic.name}`;
     }
   };
