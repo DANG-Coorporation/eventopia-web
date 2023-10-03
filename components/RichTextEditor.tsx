@@ -1,19 +1,23 @@
 import { Box } from "@chakra-ui/react";
 import { Editor } from "@tinymce/tinymce-react";
 
-export default function RichTextEditor() {
+interface IRichTextEditor {
+  onChange: (content: string) => void;
+}
+
+export default function RichTextEditor(props: IRichTextEditor) {
   return (
     <>
       <Box w='100%'>
         <Editor
           apiKey='lxezcq3kep8iys6wpxrpllmsvoznj9o183sk99ul222heoyk'
-          onInit={(evt, editor) =>
-            console.info("Editor is ready to use!", editor)
-          }
+          onInit={(evt, editor) => {
+            console.info("Editor is ready to use!", editor);
+          }}
           initialValue={"<p>Deskripsi kan eventmu</p>"}
-          // onKeyUp={handleEditorChange}
-          // onChange={handleEditorChange}
-          // onClick={handleEditorChange}
+          onKeyUp={(content, editor) => {
+            props.onChange(editor.getContent());
+          }}
           init={{
             height: 500,
             menubar: false,

@@ -1,3 +1,5 @@
+import { IEvent } from "@/common/interface/createEvent.interface";
+import { setEvent } from "@/redux/features/create_event/createEventSlice";
 import {
   TicketType,
   openTicket,
@@ -19,12 +21,12 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { BsPlusCircle, BsTrash3Fill } from "react-icons/bs";
-import RichTextEditor from "../RichTextEditor";
 import { useDispatch, useSelector } from "react-redux";
-import TicketDisplayCreate from "./tickets/TicketDisplayCreate";
+import RichTextEditor from "../RichTextEditor";
 import AddTicket from "./tickets/AddTicket";
+import TicketDisplayCreate from "./tickets/TicketDisplayCreate";
 import { RootState } from "@/redux/store";
+
 export default function EventDescriptions() {
   const event = useSelector((state: RootState) => state.createEvent);
   const dispatch = useDispatch();
@@ -44,6 +46,18 @@ export default function EventDescriptions() {
         />
       );
     });
+  };
+
+  const handlerEventDescription = (content: string) => {
+    const prevEvent = event;
+    const newEvent: IEvent = { ...prevEvent, description: content };
+    dispatch(setEvent(newEvent));
+  };
+
+  const handlerEventTerms = (content: string) => {
+    const prevEvent = event;
+    const newEvent: IEvent = { ...prevEvent, termAndCondition: content };
+    dispatch(setEvent(newEvent));
   };
 
   return (
@@ -166,9 +180,9 @@ export default function EventDescriptions() {
             <TabPanel>
               <VStack>
                 <Text>Deskripsi Event</Text>
-                <RichTextEditor />
+                <RichTextEditor onChange={handlerEventDescription} />
                 <Text>Syarat dan ketentuan</Text>
-                <RichTextEditor />
+                <RichTextEditor onChange={handlerEventTerms} />
               </VStack>
             </TabPanel>
           </TabPanels>
