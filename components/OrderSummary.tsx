@@ -103,12 +103,7 @@ export default function OrderSummary() {
       >
         <Heading size='sm'>Payment Details</Heading>
       </Stack>
-      <Stack
-        w='full'
-        p='4'
-        borderBottomColor='gray.800'
-        borderBottomWidth='2px'
-      >
+      <Stack w='full' p='4'>
         <HStack justifyContent='space-between'>
           <Text>Normal Price</Text>
           <Text as='del' color='red.300'>
@@ -128,17 +123,6 @@ export default function OrderSummary() {
           <Text as='b'>Rp 116.500</Text>
         </HStack>
       </Stack>
-      <Button
-        w='100%'
-        bg='yellow.200'
-        borderRadius='md'
-        size='lg'
-        fontSize='sm'
-        _hover={{ bg: 'yellow.300' }}
-        loadingText='Checking out'
-      >
-        Check Out
-      </Button>
     </>
   );
 }
