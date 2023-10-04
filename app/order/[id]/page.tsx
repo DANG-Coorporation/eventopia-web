@@ -19,7 +19,9 @@ import {
   FormErrorMessage,
   InputGroup,
   InputRightElement,
+  Icon,
 } from '@chakra-ui/react';
+import { FaChevronRight } from 'react-icons/fa6';
 import Navbar from '@/components/Navbar';
 import NavbarMobile from '@/components/NavbarMobile';
 import OrderForm from '@/components/OrderForm';
@@ -39,14 +41,7 @@ export default function Order() {
   return (
     <>
       {isSmallScreen ? <NavbarMobile /> : <Navbar />}
-      <Grid
-        w='full'
-        h='100vh'
-        gap='4'
-        px='4'
-        py='6'
-        templateColumns='repeat(12, 1fr)'
-      >
+      <Grid w='full' gap='4' px='6' py='6' templateColumns='repeat(12, 1fr)'>
         <GridItem
           colSpan={{ base: 12, md: 7 }}
           borderColor='gray.800'
