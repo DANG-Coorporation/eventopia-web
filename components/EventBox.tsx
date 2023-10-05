@@ -1,15 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import {
-  Box,
-  HStack,
-  VStack,
-  Text,
-  Icon,
-  IconButton,
-  Button,
-} from '@chakra-ui/react';
+import { Box, Stack, Text, Icon, Button } from '@chakra-ui/react';
 import { FaDollarSign } from 'react-icons/fa6';
 import { AddIcon, MinusIcon } from '@chakra-ui/icons';
 
@@ -34,7 +26,7 @@ export default function EventBox() {
         w='100%'
         p='2'
       >
-        <HStack
+        <Stack
           mb='2'
           borderWidth='2px'
           p='4'
@@ -43,42 +35,14 @@ export default function EventBox() {
           alignItems='flex-start'
           justifyContent='space-between'
         >
-          <VStack alignItems='left'>
-            <Text as='b' noOfLines={2} mb='2'>
-              Premium Ticket
-            </Text>
-            <HStack spacing='1' mb='2'>
-              <Text>Rp. 50.000,-</Text>
-            </HStack>
-          </VStack>
-          <HStack spacing={{ base: '4', lg: '2' }}>
-            <IconButton
-              size='sm'
-              aria-label='Add tickets'
-              borderWidth='2px'
-              borderColor='gray.800'
-              borderRadius='sm'
-              bg='green.200'
-              _hover={{ bg: 'green.300' }}
-              icon={<AddIcon />}
-              value={quantity}
-              onClick={() => setQuantity(quantity + 1)}
-            />
-            <Text as='b'>{quantity}</Text>
-            <IconButton
-              size='sm'
-              aria-label='Remove tickets'
-              borderWidth='2px'
-              borderColor='gray.800'
-              borderRadius='sm'
-              bg='red.200'
-              _hover={{ bg: 'red.300' }}
-              icon={<MinusIcon />}
-              value={quantity}
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-            />
-          </HStack>
-        </HStack>
+          <Text as='b' noOfLines={2} mb='2'>
+            Free Fire Master League Season 8 League Stage Free Fire Master
+            League Season 8 League Stage Free Fire Master League Season 8 League
+            Stage Free Fire Master League Season 8 League Stage
+          </Text>
+
+          <Text>Friday, October 6</Text>
+        </Stack>
         <Button
           type='submit'
           width='100%'
