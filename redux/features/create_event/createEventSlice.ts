@@ -19,7 +19,7 @@ const initialState: IEvent = {
   termAndCondition: "",
   isFullName: true,
   isEmail: true,
-  isPhoneNumber: false,
+  isPhoneNumber: true,
   isIdentityNumber: false,
   isDob: false,
   isGender: false,
