@@ -91,14 +91,14 @@ export default function EventDetail() {
             </Tab>
             <Tab
               _selected={{
-                bg: 'blue.200',
+                bg: 'green.200',
                 borderWidth: '2px',
                 borderColor: 'gray.800',
                 borderRadius: 'sm',
-                _hover: { bg: 'blue.300' },
+                _hover: { bg: 'green.300' },
               }}
             >
-              Tickets
+              Maps
             </Tab>
           </TabList>
           <TabPanels>
@@ -106,7 +106,7 @@ export default function EventDetail() {
               <Text>Description</Text>
             </TabPanel>
             <TabPanel>
-              <Text>Tickets</Text>
+              <Text>Maps</Text>
             </TabPanel>
           </TabPanels>
         </Tabs>
