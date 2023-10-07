@@ -12,10 +12,20 @@ export const getEvents = createAsyncThunk('event/getEvents', async () => {
   }
 });
 
+export const getEventById = createAsyncThunk('event/getEventById', async (uniqueId: string | string[]) => {
+  try {
+    const response = await axios.get(`http://nawaytes.cloud:8080/event/uniq-id/${uniqueId}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 const eventSlice = createSlice({
   name: 'event',
   initialState: {
     events: [],
+    event: {},
     loading: false,
   },
   reducers: {},
@@ -29,6 +39,16 @@ const eventSlice = createSlice({
         state.events = action.payload;
       })
       .addCase(getEvents.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(getEventById.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getEventById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.event = action.payload;
+      })
+      .addCase(getEventById.rejected, (state) => {
         state.loading = false;
       });
   },
