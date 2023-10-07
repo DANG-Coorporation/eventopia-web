@@ -1,9 +1,12 @@
 import React from 'react';
 import { Box, Image, Heading, Text } from '@chakra-ui/react';
-import moment from 'moment';
+import formatDate from '@/utils/formatDate';
+import formatPrice from '@/utils/formatPrice';
 
 export default function Card(props: any) {
-  const formattedDate = moment(props.date).format('ll');
+  const {tickets} = props;
+  const ticketTypes = tickets.map((ticket: any) => ticket.type);
+  const tiketPrices = Math.min(...tickets.filter((ticket: any) => ticket.type === 'PAID').map((ticket: any) => ticket.price))
 
   return (
     <Box
@@ -22,7 +25,7 @@ export default function Card(props: any) {
         aspectRatio={16 / 9}
       >
         <Image
-          src={props.image}
+          src={props.coverUrl}
           alt={props.name}
           borderRadius='sm'
           w='100%'
@@ -34,16 +37,13 @@ export default function Card(props: any) {
         {props.name}
       </Heading>
       <Text mb='2' fontSize='sm' noOfLines={1} px='2'>
-        {formattedDate}
+        {formatDate(props.eventStartDateTime)}
       </Text>
       <Text mb='1' fontSize='sm' noOfLines={1} px='2'>
-        {props.location}
+        {props.address}
       </Text>
       <Text mb='2' fontSize='sm' noOfLines={1} px='2'>
-        {props.price}
-      </Text>
-      <Text as='b' fontSize='sm' noOfLines={1} px='2'>
-        {props.author}
+        {ticketTypes.includes('FREE') ? 'FREE' : `Starting at ${formatPrice(tiketPrices)}`}
       </Text>
     </Box>
   );
