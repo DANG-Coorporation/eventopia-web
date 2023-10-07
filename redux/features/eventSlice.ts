@@ -21,6 +21,15 @@ export const getEventById = createAsyncThunk('event/getEventById', async (unique
   }
 });
 
+export const postEventTicket = createAsyncThunk('event/postEventTicket', async (data: any) => {
+  try {
+    const response = await axios.post('http://nawaytes.cloud:8080/cart', data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+})
+
 const eventSlice = createSlice({
   name: 'event',
   initialState: {
@@ -49,6 +58,16 @@ const eventSlice = createSlice({
         state.event = action.payload;
       })
       .addCase(getEventById.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(postEventTicket.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(postEventTicket.fulfilled, (state, action) => {
+        state.loading = false;
+        state.event = action.payload;
+      })
+      .addCase(postEventTicket.rejected, (state) => {
         state.loading = false;
       });
   },

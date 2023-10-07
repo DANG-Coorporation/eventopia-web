@@ -1,21 +1,47 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Box, Stack, Text, HStack, Button } from '@chakra-ui/react';
+import { Box, Stack, Text, HStack, Button, useToast } from '@chakra-ui/react';
 import formatPrice from '@/utils/formatPrice';
 import { useSelector } from 'react-redux';
-import Link from 'next/link';
+import { AppDispatch } from '@/redux/store';
+import { useDispatch } from 'react-redux';
+import { postEventTicket } from '@/redux/features/eventSlice';
+import { useRouter } from 'next/navigation';
+import { getLocalStorage } from '@/utils/localStorage';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/utils/firebase';
 
 export default function EventBox(props: any) {
   const [loadingState, setLoadingState] = useState<boolean>(false);
   const { tickets } = useSelector((state: any) => state.ticket);
+  const router = useRouter();
+  const dispatch: AppDispatch = useDispatch();
+  const isAuthenticated = getLocalStorage('accessToken');
+  const [user] = useAuthState(auth);
+  const toast = useToast();
+
+  console.log(props.id)
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    setLoadingState(true);
-    setTimeout(() => {
-      setLoadingState(false);
-    }, 1000);
+    if (isAuthenticated === null) {
+      toast({
+        title: 'Login',
+        description: 'Please login to get your ticket!',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    } else if (isAuthenticated !== null || user !== null) {
+      setLoadingState(true);
+      dispatch(postEventTicket({ ...props, tickets, totalPrice }));
+      router.push(`/cart/${props.uniqueId}`);
+      setTimeout(() => {
+        setLoadingState(false);
+      }, 1000);
+    }
   };
 
   const totalPrice = tickets.reduce((total: number, ticket: any) => {
@@ -89,8 +115,6 @@ export default function EventBox(props: any) {
           </HStack>
         )}
         <Button
-          as={Link}
-          href={`/cart/${props.uniqueId}`}
           type='submit'
           width='100%'
           size='lg'

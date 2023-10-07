@@ -139,7 +139,7 @@ export default function EventDetail() {
                   gap='4'
                 >
                   {eventData
-                    ? eventData.tickets.map((ticket: any) => (
+                    ? eventData.tickets?.map((ticket: any) => (
                         <EventTicket
                           key={ticket.id}
                           {...ticket}
