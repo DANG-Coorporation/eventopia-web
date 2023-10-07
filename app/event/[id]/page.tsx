@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { Stack, useBreakpointValue } from '@chakra-ui/react';
-import EventDetail from '@/components/EventDetail';
-import EventBar from '@/components/EventBar';
+import EventDetail from '@/components/EventDetail'
 import NavbarMobile from '@/components/NavbarMobile';
 import Navbar from '@/components/Navbar';
 
@@ -29,7 +28,6 @@ export default function Detail() {
       >
         <EventDetail />
       </Stack>
-      {isSmallScreen ? <EventBar /> : null}
     </>
   );
 }

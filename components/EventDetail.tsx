@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Stack,
   Box,
@@ -11,10 +11,27 @@ import {
   TabPanels,
   TabPanel,
   HStack,
+  Grid,
+  GridItem,
 } from '@chakra-ui/react';
 import EventBox from './EventBox';
+import { AppDispatch } from '@/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'next/navigation';
+import { getEventById } from '@/redux/features/eventSlice';
+import formatDate from '@/utils/formatDate';
+import EventTicket from './EventTicket';
 
 export default function EventDetail() {
+  const { id } = useParams();
+  const dispatch: AppDispatch = useDispatch();
+  const { event } = useSelector((state: any) => state.event);
+  const eventData = event ? event.data : {};
+
+  useEffect(() => {
+    dispatch(getEventById(id));
+  }, [id]);
+
   return (
     <Stack>
       <Box
@@ -38,86 +55,111 @@ export default function EventDetail() {
           right='0'
           bottom='0'
           zIndex='-1'
-          style={{}}
-          backgroundImage={`url('https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F572393319%2F175782414437%2F1%2Foriginal.20230810-024049?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C18%2C1200%2C600&s=f7fc1841c512c6e12e141bb47f4edd7f')`}
+          backgroundImage={`url(${eventData ? eventData.coverUrl : ''})`}
           backgroundPosition='center'
           backgroundSize='cover'
           backgroundRepeat='no-repeat'
           filter='blur(15px)'
         />
         <Image
-          src='https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F572393319%2F175782414437%2F1%2Foriginal.20230810-024049?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C18%2C1200%2C600&s=f7fc1841c512c6e12e141bb47f4edd7f'
-          alt='CISO Indonesia Summit &amp; Roundtable 2021'
+          src={eventData ? eventData.coverUrl : ''}
+          alt={eventData ? eventData.name : ''}
           borderRadius='sm'
           h='auto'
           objectFit='cover'
         />
       </Box>
-      <Heading as='h1' size='2xl' mb='1'>
-        CISO Indonesia
-      </Heading>
-      <Text as='h2' fontSize='xl' mb='1'>
-        Pullman Jakarta Indonesia Thamrin CBD
-      </Text>
-      <Text as='h2' fontSize='xl' mb='4'>
-        Friday, October 6
-      </Text>
-      <HStack
-        spacing='6'
-        wrap='wrap'
-        justifyContent='space-between'
-        alignItems='flex-start'
+      <Heading
+        as='h1'
+        size='2xl'
+        mb='1'
       >
-        <Tabs
-          isFitted
-          variant='unstyled'
-          p='2'
-          borderWidth='2px'
-          borderColor='gray.800'
-          borderRadius='sm'
-          w={{ base: '100%', lg: '65%' }}
-        >
-          <TabList>
-            <Tab
-              _selected={{
-                bg: 'blue.200',
-                borderWidth: '2px',
-                borderColor: 'gray.800',
-                borderRadius: 'sm',
-                _hover: { bg: 'blue.300' },
-              }}
-            >
-              Description
-            </Tab>
-            <Tab
-              _selected={{
-                bg: 'green.200',
-                borderWidth: '2px',
-                borderColor: 'gray.800',
-                borderRadius: 'sm',
-                _hover: { bg: 'green.300' },
-              }}
-            >
-              Maps
-            </Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <Text>Description</Text>
-            </TabPanel>
-            <TabPanel>
-              <Text>Maps</Text>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-        <Stack
-          h='100%'
-          w={{ base: '100%', lg: '30%' }}
-          display={{ base: 'none', md: 'flex' }}
-        >
-          <EventBox />
-        </Stack>
-      </HStack>
+        {eventData ? eventData.name : ''}
+      </Heading>
+      <Text
+        as='h2'
+        fontSize='xl'
+        mb='1'
+      >
+        {eventData ? eventData.address : ''}
+      </Text>
+      <Text
+        as='h2'
+        fontSize='xl'
+        mb='4'
+      >
+        {formatDate(eventData ? eventData.eventStartDateTime : '')}
+      </Text>
+      <Grid
+        templateColumns='repeat(12, 1fr)'
+        gap={{ base: 6, lg: 16 }}
+        h='fit-content'
+      >
+        <GridItem colSpan={{ base: 12, lg: 8 }}>
+          <Tabs
+            isFitted
+            variant='unstyled'
+            p='2'
+            borderWidth='2px'
+            borderColor='gray.800'
+            borderRadius='sm'
+            w='100%'
+          >
+            <TabList>
+              <Tab
+                _selected={{
+                  bg: 'blue.200',
+                  borderWidth: '2px',
+                  borderColor: 'gray.800',
+                  borderRadius: 'sm',
+                  _hover: { bg: 'blue.300' },
+                }}
+              >
+                Description
+              </Tab>
+              <Tab
+                _selected={{
+                  bg: 'green.200',
+                  borderWidth: '2px',
+                  borderColor: 'gray.800',
+                  borderRadius: 'sm',
+                  _hover: { bg: 'green.300' },
+                }}
+              >
+                Tickets
+              </Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <Text>{eventData ? eventData.description : ''}</Text>
+              </TabPanel>
+              <TabPanel>
+                <Stack
+                  w='100%'
+                  gap='4'
+                >
+                  {eventData
+                    ? eventData.tickets?.map((ticket: any) => (
+                        <EventTicket
+                          key={ticket.id}
+                          {...ticket}
+                        />
+                      ))
+                    : ''}
+                </Stack>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </GridItem>
+        <GridItem colSpan={{ base: 12, lg: 4 }}>
+          <Stack
+            h='fit-content'
+            w='100%'
+          >
+            <EventBox {...eventData} />
+          </Stack>
+        </GridItem>
+      </Grid>
     </Stack>
   );
 }
