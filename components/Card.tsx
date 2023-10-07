@@ -2,19 +2,24 @@ import React from 'react';
 import { Box, Image, Heading, Text } from '@chakra-ui/react';
 import formatDate from '@/utils/formatDate';
 import formatPrice from '@/utils/formatPrice';
+import Link from 'next/link';
 
 export default function Card(props: any) {
+  const {uniqueId} = props;
   const {tickets} = props;
   const ticketTypes = tickets.map((ticket: any) => ticket.type);
   const tiketPrices = Math.min(...tickets.filter((ticket: any) => ticket.type === 'PAID').map((ticket: any) => ticket.price))
 
   return (
     <Box
+      as={Link}
+      href={`/event/${uniqueId}`}
       borderRadius='sm'
       shadow='sm'
       borderWidth='2px'
       borderColor='gray.800'
       p='2'
+      cursor='pointer'
       _hover={{ shadow: 'lg' }}
     >
       <Box
