@@ -17,6 +17,7 @@ import { auth } from '@/utils/firebase';
 import { useSelector, useDispatch } from 'react-redux';
 import { createOrder } from '@/redux/features/orderSlice';
 import { AppDispatch } from '@/redux/store';
+import NextLink from 'next/link';
 
 export default function OrderForm() {
   const [loadingState, setLoadingState] = useState<boolean>(false);
@@ -220,6 +221,9 @@ export default function OrderForm() {
         </Box>
       </Stack>
       <Button
+        type='submit'
+        as={NextLink}
+        href="https://sandbox.doku.com/how-to-pay/v2/bca-virtual-account/1900800000044306/icsURAGpZGnAoKgYM2rtZsbM_DjCrvTRef1PlOM1Lx4"
         w='100%'
         bg='yellow.200'
         borderRadius='md'
