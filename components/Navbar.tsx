@@ -67,7 +67,7 @@ export default function Navbar() {
 
   return (
     <Flex justify='space-between' gap='2' py='4' px='6' shadow='sm'>
-      <Heading as='h1' size='lg' mr='6'>
+      <Heading as={NextLink} href='/' cursor='pointer' size='lg' mr='6'>
         Eventopia
       </Heading>
       <HStack w='80%'>

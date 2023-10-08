@@ -67,7 +67,7 @@ export default function CarouselCard(props: any) {
             w='fit-content'
             mb='2'
           >
-            <Text fontSize='sm'>Category</Text>
+            <Text fontSize='sm'>{props.category}</Text>
           </Box>
           <Heading as='h3' color='white' noOfLines={2} size='md' mb='1'>
             {props.name}
