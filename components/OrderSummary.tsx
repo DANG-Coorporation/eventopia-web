@@ -14,8 +14,19 @@ import {
   InputRightElement,
   HStack,
 } from '@chakra-ui/react';
+import {useSelector} from 'react-redux';
+import formatPrice from '@/utils/formatPrice';
 
-export default function OrderSummary() {
+export default function OrderSummary(props: any) {
+  const { tickets } = useSelector((state: any) => state.ticket);
+
+  const normalPrice = tickets.reduce((total: number, ticket: any) => {
+    return total + ticket.price * ticket.quantity;
+  }, 0);
+
+  const PPN = normalPrice * 0.11;
+  const totalPrice = normalPrice + PPN;
+
   return (
     <>
       <Stack
@@ -42,7 +53,8 @@ export default function OrderSummary() {
           aspectRatio={16 / 9}
         >
           <Image
-            src='https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F582789039%2F1733806347483%2F1%2Foriginal.20230825-003650?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2160%2C1080&s=ccbf873fe96ec99f28f899b764d50f6d'
+            src={props.coverUrl}
+            alt={props.name}
             w='100%'
             h='100%'
             objectFit='cover'
@@ -50,12 +62,16 @@ export default function OrderSummary() {
         </Box>
         <Stack>
           <Heading size='sm' noOfLines={2}>
-            Free Fire Master League Season 8 League Stage
+            {props.name}
           </Heading>
-          <Text noOfLines={2} mb='-1'>
-            2 x Premium Ticket
-          </Text>
-          <Text>Rp 250.000</Text>
+          {tickets.map((ticket: any) => (
+            <Stack key={ticket.id}>
+              <Text noOfLines={2} mb='-1'>
+                {ticket.quantity} x {ticket.name}
+              </Text>
+              <Text>{formatPrice(ticket.price)}</Text>
+            </Stack>
+          ))}
         </Stack>
       </Stack>
       <Stack
@@ -106,21 +122,21 @@ export default function OrderSummary() {
       <Stack w='full' p='4'>
         <HStack justifyContent='space-between'>
           <Text>Normal Price</Text>
-          <Text as='del' color='red.300'>
-            Rp 250.000
+          <Text>
+            {formatPrice(normalPrice)}
           </Text>
         </HStack>
-        <HStack justifyContent='space-between'>
+        {/* <HStack justifyContent='space-between'>
           <Text>Discount Price</Text>
           <Text>Rp 150.000</Text>
-        </HStack>
+        </HStack> */}
         <HStack justifyContent='space-between'>
           <Text>PPN 11%</Text>
-          <Text color='green.300'>+ Rp 16.500</Text>
+          <Text color='green.300'>+ {formatPrice(PPN)}</Text>
         </HStack>
         <HStack justifyContent='space-between'>
           <Text>Total</Text>
-          <Text as='b'>Rp 116.500</Text>
+          <Text as='b'>{formatPrice(totalPrice)}</Text>
         </HStack>
       </Stack>
     </>

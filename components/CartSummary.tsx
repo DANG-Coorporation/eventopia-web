@@ -22,12 +22,15 @@ import formatPrice  from '@/utils/formatPrice';
 import moment from 'moment';
 import {useRouter} from 'next/navigation';
 import { postCart } from '../redux/features/cartSlice';
+import { getLocalStorage } from '@/utils/localStorage';
+import NextLink from 'next/link';
 
 export default function CartSummary(props: any) {
   const [loadingState, setLoadingState] = useState<boolean>(false);
   const { tickets } = useSelector((state: any) => state.ticket);
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
+  const accessToken = getLocalStorage('accessToken');
 
   const formatDate = (date: string) => {
     return moment(date).format('LL');
@@ -44,7 +47,7 @@ export default function CartSummary(props: any) {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setLoadingState(true);
-    dispatch(postCart({ ...props, tickets, totalPrice }));
+    dispatch(postCart({ data: { ...props, tickets, totalPrice }, token: accessToken }));
     router.push(`/order/${props.uniqueId}`);
     setTimeout(() => {
       setLoadingState(false);
@@ -137,6 +140,8 @@ export default function CartSummary(props: any) {
         <Text as='b'>{formatPrice(totalPrice)}</Text>
       </HStack>
       <Button
+        as={NextLink}
+        href="https://sandbox.doku.com/how-to-pay/v2/bca-virtual-account/1900800000044306/icsURAGpZGnAoKgYM2rtZsbM_DjCrvTRef1PlOM1Lx4"
         type='submit'
         w='100%'
         bg='yellow.200'

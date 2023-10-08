@@ -17,13 +17,13 @@ export default function EventBox(props: any) {
   const { tickets } = useSelector((state: any) => state.ticket);
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
-  const isAuthenticated = getLocalStorage('accessToken');
+  const accessToken = getLocalStorage('accessToken');
   const [user] = useAuthState(auth);
   const toast = useToast();
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    if (isAuthenticated === null) {
+    if (accessToken === null) {
       toast({
         title: 'Login',
         description: 'Please login to get your ticket!',
@@ -32,9 +32,9 @@ export default function EventBox(props: any) {
         isClosable: true,
         position: 'top-right',
       });
-    } else if (isAuthenticated !== null || user !== null) {
+    } else if (accessToken !== null || user !== null) {
       setLoadingState(true);
-      dispatch(postEventTicket({ ...props, tickets, totalPrice }));
+      dispatch(postEventTicket({ data: { ...props, tickets, totalPrice }, token: accessToken }));
       router.push(`/cart/${props.uniqueId}`);
       setTimeout(() => {
         setLoadingState(false);
