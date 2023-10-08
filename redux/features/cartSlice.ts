@@ -3,11 +3,11 @@ import axios from 'axios';
 
 export const postCart = createAsyncThunk('cart/postCart', async ({ data, token }: { data: any, token: string | null }) => {
   try {
-    const tokenValue = token || '';
+    const accessToken = token || '';
     const response = await axios.post('http://nawaytes.cloud:8080/cart', data, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${tokenValue}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
     return response.data;
