@@ -47,7 +47,9 @@ export default function CartSummary(props: any) {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setLoadingState(true);
-    dispatch(postCart({ data: { ...props, tickets, totalPrice }, token: accessToken }));
+    if (accessToken !== null) {
+      dispatch(postCart({ data: { ...props, tickets, totalPrice }, token: accessToken }));
+    }    
     router.push(`/order/${props.uniqueId}`);
     setTimeout(() => {
       setLoadingState(false);
