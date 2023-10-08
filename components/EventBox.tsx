@@ -21,8 +21,6 @@ export default function EventBox(props: any) {
   const [user] = useAuthState(auth);
   const toast = useToast();
 
-  console.log(props.id)
-
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (isAuthenticated === null) {

@@ -130,6 +130,7 @@ export default function Carousel(props: any) {
         'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F572639029%2F121703163141%2F1%2Foriginal.20230810-130341?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2160%2C1080&s=eaac9a819fbdcb319811a98893079353',
       author: 'The University of Sydney',
       price: 100,
+      category: 'Education',
     },
     {
       id: 2,
@@ -144,6 +145,7 @@ export default function Carousel(props: any) {
         'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F567857469%2F1681512162793%2F1%2Foriginal.20230803-124324?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C6912%2C3456&s=63012250b023c3eba51d8452f5d761fc',
       author: 'elytSié Fashion Enthusiast Club',
       price: 0,
+      category: 'Fashion',
     },
     {
       id: 3,
@@ -158,6 +160,7 @@ export default function Carousel(props: any) {
         'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F588063109%2F314838640630%2F1%2Foriginal.20230901-110038?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C9000%2C4500&s=40d757bffa704ded05eaabe8a5d63bdd',
       author: 'Goethe-Institut Indonesien',
       price: 0,
+      category: 'Education',
     },
     {
       id: 4,
@@ -172,6 +175,7 @@ export default function Carousel(props: any) {
         'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F589073369%2F1407595172493%2F1%2Foriginal.20230903-101326?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2160%2C1080&s=11c0023b7b584c1bb9625df5842c9df1',
       author: 'CQUniversity, Indonesia Office',
       price: 30,
+      category: 'Business',
     },
     {
       id: 5,
@@ -186,6 +190,7 @@ export default function Carousel(props: any) {
         'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F588081059%2F202689957937%2F1%2Foriginal.20230901-114048?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2160%2C1080&s=2df58cd601fec6aa8d33c1c65bab9777',
       author: 'Institut Français Indonesia',
       price: 0,
+      category: 'Education',
     },
     {
       id: 6,
@@ -200,6 +205,7 @@ export default function Carousel(props: any) {
         'https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F585194029%2F145365864639%2F1%2Foriginal.20230829-074247?w=940&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2160%2C1080&s=cafca39a9711b376f7bca25140b7a83c',
       author: 'EducationUSA Indonesia',
       price: 49,
+      category: 'Education',
     },
   ];
 
