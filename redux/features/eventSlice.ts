@@ -21,14 +21,21 @@ export const getEventById = createAsyncThunk('event/getEventById', async (unique
   }
 });
 
-export const postEventTicket = createAsyncThunk('event/postEventTicket', async (data: any) => {
+export const postEventTicket = createAsyncThunk('event/postEventTicket', async ({ data, token }: { data: any, token: string }) => {
   try {
-    const response = await axios.post('http://nawaytes.cloud:8080/cart', data);
+    const response = await axios.post('http://nawaytes.cloud:8080/cart', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error(error);
+    throw error;
   }
-})
+});
+
 
 const eventSlice = createSlice({
   name: 'event',

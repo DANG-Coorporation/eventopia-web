@@ -4,6 +4,7 @@ import loginReducer from './features/loginSlice';
 import eventReducer from './features/eventSlice';
 import ticketReducer from './features/ticketSlice';
 import cartReducer from './features/cartSlice';
+import orderReducer from './features/orderSlice';
 import modalCreateEventReducer from './features/create_event/modalSlice';
 import createEventReducer from './features/create_event/createEventSlice';
 import masterDateReducer from './features/create_event/masterDataSlice';
@@ -17,6 +18,7 @@ export const store = configureStore({
     event: eventReducer,
     ticket: ticketReducer,
     cart: cartReducer,
+    order: orderReducer,
     modalCreateEvent: modalCreateEventReducer,
     createEvent: createEventReducer,
     masterData: masterDateReducer,

@@ -1,12 +1,18 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const postCart = createAsyncThunk('cart/postCart', async (cart: Array<any>) => {
+export const postCart = createAsyncThunk('cart/postCart', async ({ data, token }: { data: any, token: string }) => {
   try {
-    const response = await axios.post('http://nawaytes.cloud:8080/cart', cart);
+    const response = await axios.post('http://nawaytes.cloud:8080/cart', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 });
 

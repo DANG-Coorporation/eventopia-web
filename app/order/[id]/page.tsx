@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   useBreakpointValue,
   Grid,
@@ -26,8 +26,21 @@ import Navbar from '@/components/Navbar';
 import NavbarMobile from '@/components/NavbarMobile';
 import OrderForm from '@/components/OrderForm';
 import OrderSummary from '@/components/OrderSummary';
+import { useParams } from 'next/navigation'
+import { useSelector, useDispatch } from 'react-redux';
+import { getEventById } from '@/redux/features/eventSlice';
+import { AppDispatch } from '@/redux/store';
 
 export default function Order() {
+  const { id } = useParams()
+  const dispatch: AppDispatch = useDispatch();
+  const { event } = useSelector((state: any) => state.event);
+  const eventData = event ? event.data : {};
+
+  useEffect(() => {
+    dispatch(getEventById(id));
+  }, [id]);
+
   const isSmallScreen = useBreakpointValue(
     {
       base: true,
@@ -49,7 +62,7 @@ export default function Order() {
           borderRadius='sm'
           h='fit-content'
         >
-          <OrderForm />
+          <OrderForm {...eventData} />
         </GridItem>
         <GridItem
           colSpan={{ base: 12, md: 5 }}
@@ -58,7 +71,7 @@ export default function Order() {
           borderRadius='sm'
           h='fit-content'
         >
-          <OrderSummary />
+          <OrderSummary {...eventData} />
         </GridItem>
       </Grid>
     </>

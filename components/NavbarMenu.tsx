@@ -29,18 +29,15 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 import { verifyUser } from '@/redux/features/loginSlice';
 import { BiDotsVertical } from 'react-icons/bi';
+import { getLocalStorage } from '@/utils/localStorage';
 
 export default function NavbarMenu() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [user] = useAuthState(auth);
   const router = useRouter();
-  const accessToken =
-    typeof window !== 'undefined' && localStorage.getItem('accessToken');
-  const localUser =
-    typeof window !== 'undefined' &&
-    JSON.parse(localStorage.getItem('localUser') || '{}');
-  const selectedAvatar =
-    typeof window !== 'undefined' && localStorage.getItem('selectedAvatar');
+  const accessToken = getLocalStorage('accessToken');
+  const localUser = JSON.parse(getLocalStorage('localUser') || '{}');
+  const selectedAvatar = getLocalStorage('selectedAvatar');   
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
